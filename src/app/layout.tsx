@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import { geist } from '@/app/fonts';
 import '@/styles/globals.css';
 import { ThemeProvider } from '@/context/themeContext';
-import Header from '@/components/partials/Header/page';
-import Footer from '@/components/partials/Footer/page';
 
 export const metadata: Metadata = {
   title: 'Libran',
@@ -18,15 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geist.className} antialiased`}>
-        <ThemeProvider>
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="grow">
-              <div className="mx-auto mt-9 flex max-w-7xl flex-col p-5 sm:p-20">{children}</div>
-            </main>
-            <Footer />
-          </div>
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

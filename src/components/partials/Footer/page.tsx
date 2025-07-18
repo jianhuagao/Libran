@@ -8,14 +8,11 @@ export default memo(function Footer() {
         <div>
           <div className="flex items-end gap-3">
             <Image src="/img/logo.svg" className="ml-1 opacity-70" width={28} height={28} alt="" />
-            <span className="text-xl font-semibold">Twinkle UI</span>
+            <span className="text-xl font-semibold">Libran</span>
           </div>
           <div className="mt-5 flex flex-wrap items-center">
-            © 2024 Twinkle UI
-            <a
-              className="ml-1 text-purple-400 hover:underline"
-              href="https://github.com/jianhuagao/TwinkleUI?tab=MIT-1-ov-file"
-            >
+            © 2024 Libran
+            <a className="ml-1 text-purple-400 hover:underline" href="https://github.com/jianhuagao/Libran?tab=MIT-1-ov-file">
               MIT License
             </a>
             <span className="mx-1">/ Created by</span>

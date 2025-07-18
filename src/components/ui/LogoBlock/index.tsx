@@ -15,9 +15,7 @@ export default function LogoBlock() {
           height={14}
           alt=""
         />
-        <span>
-          Twinkle<span className="font-light">UI</span>
-        </span>
+        <span>Libran</span>
       </div>
     </Link>
   );
