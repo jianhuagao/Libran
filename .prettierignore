@@ -1,0 +1,6 @@
+# Ignore files
+*.min.*
+/.next/
+pnpm-lock.yaml
+# css
+/public/components.css

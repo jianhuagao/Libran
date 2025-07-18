@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+/* 加载排版插件，生成 prose 系列类 */
+@plugin "@tailwindcss/typography";
+/* 如果需要，加载其他官方插件 */
+@plugin "@tailwindcss/forms";
+
+/* 自定义 dark 变体，基于 .dark 类切换 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  /* 🌐 Firefox 样式 */
+  /* html,
+  body,
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #b9b9b9c2 transparent;
+  } */
+
+  /* 🌐 WebKit 浏览器样式 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-color: #b9b9b9c2;
+    background-clip: content-box;
+    border: 1px solid transparent;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent; /* 解决右下角白色方块 */
+  }
+
+  .mini-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background: transparent;
+  }
+
+  .mini-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-color: rgba(184, 184, 184, 0.5);
+    background-clip: content-box;
+    border: 1px solid transparent;
+  }
+
+  body {
+    @apply bg-white text-black transition-[background-color] dark:bg-[#09090b] dark:text-white;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
