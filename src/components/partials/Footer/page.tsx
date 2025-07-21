@@ -12,9 +12,12 @@ export default memo(function Footer() {
           </div>
           <div className="mt-5 flex flex-wrap items-center">
             © 2024 Libran
-            {/* <a className="ml-1 text-purple-400 hover:underline" href="https://github.com/jianhuagao/Libran?tab=MIT-1-ov-file">
+            <a
+              className="text-primary ml-1 hover:underline"
+              href="https://github.com/jianhuagao/Libran?tab=MIT-1-ov-file#readme"
+            >
               MIT License
-            </a> */}
+            </a>
             <span className="mx-1">/ Created by</span>
             <a href="https://github.com/jianhuagao" target="_blank" className="transition-all hover:underline">
               Jianhuagao

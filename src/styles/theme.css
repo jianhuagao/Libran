@@ -1,0 +1,4 @@
+@theme inline {
+  --color-primary: var(--color-green-600);
+  --radius-primary: var(--radius-xl);
+}
