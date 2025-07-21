@@ -50,12 +50,13 @@ export default function HeaderClientWrapper({ logoBlock, menuBlock, searchBlock,
       )}
     >
       {isScrolled && (
-        <div className="rounded-primary absolute inset-0 -z-10 bg-white/50 ring-1 ring-gray-400/20 dark:bg-black/60 dark:ring-white/20"></div>
+        <div className="rounded-primary absolute inset-0 -z-10 bg-white/50 ring-1 ring-gray-400/20 dark:bg-black/50 dark:ring-white/20"></div>
       )}
       {logoBlock}
       {menuBlock && <div className="ml-4">{menuBlock}</div>}
-      {searchBlock && <div className="ml-3">{searchBlock}</div>}
-      <div className="ml-auto flex items-center gap-3">{optionsBlock}</div>
+      <div className="ml-auto"></div>
+      {searchBlock && <div>{searchBlock}</div>}
+      <div className="ml-3 flex items-center gap-3 lg:ml-12">{optionsBlock}</div>
     </motion.div>
   );
 }
