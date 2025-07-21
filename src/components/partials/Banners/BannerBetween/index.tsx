@@ -3,7 +3,7 @@ import AnimatedShow from '@/components/ui/motions/AnimatedShow';
 
 export default function BannerBetween() {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center flex-col gap-12 lg:gap-2 lg:flex-row justify-between">
       <AnimatedShow inViewShow className="flex flex-col items-start gap-4">
         <h1 className="text-4xl font-bold">Home Title</h1>
         <h3 className="mb-3 max-w-96 text-xl opacity-80">
