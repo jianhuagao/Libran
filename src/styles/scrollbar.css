@@ -37,4 +37,13 @@
     background-clip: content-box;
     border: 1px solid transparent;
   }
+
+  /* .hiddenScrollbar 隐藏滚动条 */
+  .hiddenScrollbar::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .hiddenScrollbar::-webkit-scrollbar-thumb {
+    display: none !important;
+  }
 }
