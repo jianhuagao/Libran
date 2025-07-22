@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import clsx from 'clsx';
 
 interface Props {
@@ -26,37 +25,20 @@ export default function HeaderClientWrapper({ logoBlock, menuBlock, searchBlock,
   }, []);
 
   return (
-    <motion.div
-      animate={isScrolled ? 'scrolled' : 'top'}
-      variants={{
-        top: {
-          backdropFilter: 'blur(0px)',
-          margin: 0,
-          height: '96px',
-          padding: '0 80px',
-          transition: { duration: 0.3, ease: 'easeOut' }
-        },
-        scrolled: {
-          backdropFilter: 'blur(10px)',
-          margin: '20px',
-          height: '60px',
-          padding: '0 20px',
-          transition: { duration: 0.3, ease: 'easeOut' }
-        }
-      }}
+    <div
       className={clsx(
-        'rounded-primary relative mx-auto flex items-center',
-        'will-change-backdrop-filter will-change-transform'
+        'rounded-primary mx-auto flex items-center',
+        isScrolled
+          ? 'h-16 w-[calc(100%-2rem)] translate-y-4 bg-white/50 px-5 ring-1 ring-gray-400/20 backdrop-blur-md dark:bg-black/50 dark:ring-white/20'
+          : 'h-24 w-full bg-transparent px-5 ring-0 backdrop-blur-none lg:px-20 dark:bg-transparent',
+        'will-change-backdrop-filter transition-[height,width,translate,padding] duration-500 ease-in-out will-change-transform'
       )}
     >
-      {isScrolled && (
-        <div className="rounded-primary absolute inset-0 -z-10 bg-white/50 ring-1 ring-gray-400/20 dark:bg-black/50 dark:ring-white/20"></div>
-      )}
       {logoBlock}
       {menuBlock && <div className="ml-4">{menuBlock}</div>}
       <div className="ml-auto"></div>
       {searchBlock && <div>{searchBlock}</div>}
       <div className="ml-3 flex items-center gap-3 lg:ml-12">{optionsBlock}</div>
-    </motion.div>
+    </div>
   );
 }
