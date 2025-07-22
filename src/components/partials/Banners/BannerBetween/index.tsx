@@ -3,9 +3,9 @@ import AnimatedShow from '@/components/ui/motions/AnimatedShow';
 
 export default function BannerBetween() {
   return (
-    <div className="flex items-center flex-col gap-12 lg:gap-2 lg:flex-row justify-between">
+    <div className="flex flex-col items-center justify-between gap-12 lg:flex-row lg:gap-2">
       <AnimatedShow inViewShow className="flex flex-col items-start gap-4">
-        <h1 className="text-4xl font-bold">Home Title</h1>
+        <h1 className="text-5xl font-bold">Home</h1>
         <h3 className="mb-3 max-w-96 text-xl opacity-80">
           This is an example website where you can place the subtitle of your website
         </h3>
@@ -25,7 +25,7 @@ export default function BannerBetween() {
             <Image
               width={140}
               height={80}
-              src="/img/wallpaper/w1.jpg"
+              src="/img/wallpaper/c8.jpg"
               className="float-right ml-4 h-[80px] w-[140px] rounded-lg object-cover shadow-2xl"
               alt=""
             />

@@ -1,5 +1,6 @@
+import clsx from 'clsx';
 import { ReactNode } from 'react';
 
-export default function CenterContent({ children }: { children: ReactNode }) {
-  return <div className="mx-auto mt-9 flex max-w-7xl flex-col p-5 sm:p-16">{children}</div>;
+export default function CenterContent({ children, className }: { children: ReactNode; className?: string }) {
+  return <div className={clsx('mx-auto mt-9 max-w-7xl p-3 sm:p-10', className)}>{children}</div>;
 }
