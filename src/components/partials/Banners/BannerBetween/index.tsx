@@ -38,7 +38,6 @@ export default function BannerBetween() {
             </p>
           </div>
         </div>
-        <></>
       </AnimatedShow>
     </div>
   );

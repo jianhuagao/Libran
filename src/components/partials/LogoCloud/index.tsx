@@ -1,3 +1,5 @@
+import AnimatedShow from '@/components/ui/motions/AnimatedShow';
+
 const logos = [
   {
     name: 'Vercel',
@@ -40,7 +42,7 @@ const logos = [
 
 const LogoCloud = () => {
   return (
-    <div className="w-full py-12">
+    <AnimatedShow scale={0.5} inViewShow className="w-full py-12">
       <div className="mx-auto w-full px-4 md:px-8">
         <div
           className="group relative mt-6 flex gap-6 overflow-hidden p-2"
@@ -57,7 +59,7 @@ const LogoCloud = () => {
           ))}
         </div>
       </div>
-    </div>
+    </AnimatedShow>
   );
 };
 

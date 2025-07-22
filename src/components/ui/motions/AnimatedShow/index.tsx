@@ -8,7 +8,7 @@ type WithDataOriginalClassName = {
 };
 
 interface AnimatedShowProps {
-  children: React.ReactNode[];
+  children: React.ReactNode[] | React.ReactNode;
   className?: string;
   inViewShow?: boolean;
   scale?: number;
@@ -60,6 +60,8 @@ const AnimatedShow = ({
     [scale, childDuration]
   );
 
+  const arrChildren = Array.isArray(children) ? children : [children];
+
   return (
     <motion.div
       initial="hidden"
@@ -68,7 +70,7 @@ const AnimatedShow = ({
       variants={animationVariants}
       className={className}
     >
-      {children.map((child, index) => {
+      {arrChildren.map((child, index) => {
         let originalClassName = '';
         if (isValidElement(child)) {
           const props = child.props as unknown as WithDataOriginalClassName;
