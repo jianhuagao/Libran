@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function PictureWall() {
   return (
-    <div className="hiddenScrollbar relative flex w-full overflow-x-auto py-20">
+    <div className="hiddenScrollbar relative flex w-full overflow-x-auto py-36">
       <AnimatedShow inViewShow scale={0.7} className="mx-auto flex items-center gap-12">
         {[1, 2, 3, 4, 5, 6, 7, 8].map(item => (
           <div key={item} className="rotate-4 transition-transform duration-700 ease-in-out hover:scale-105 hover:rotate-0">
