@@ -1,0 +1,23 @@
+import AnimatedShow from '@/components/ui/motions/AnimatedShow';
+
+export default function Features() {
+  return (
+    <AnimatedShow scale={0.5} inViewShow className="grid w-full grid-cols-1 gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
+      {[1, 2, 3, 4, 5, 6].map(item => (
+        <div
+          key={item}
+          className="hover:border-primary/50 flex flex-col gap-3 rounded-4xl border border-gray-200 bg-white/80 p-5 transition-[border-color] dark:border-white/5 dark:bg-[#252529]/70"
+        >
+          <div className="rounded-primary flex size-10 items-center justify-center bg-[#f6f6f7]/80 text-lg dark:bg-black/80">
+            🌠
+          </div>
+          <p className="text-base font-semibold opacity-80">Feature {item}</p>
+          <p className="text-sm text-gray-800 dark:text-gray-400">
+            Tuae nam ex similique incidunt expedita exerci tationem laudantium. Repellendus quisquam numquam perferendis earum
+            sapiente non tempore? Fugit repellat ut maiores.
+          </p>
+        </div>
+      ))}
+    </AnimatedShow>
+  );
+}

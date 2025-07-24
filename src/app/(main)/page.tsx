@@ -1,4 +1,5 @@
 import BannerBetween from '@/components/partials/Banners/BannerBetween';
+import Features from '@/components/partials/Features';
 import LogoCloud from '@/components/partials/LogoCloud';
 import PictureWall from '@/components/partials/PictureWall';
 import BackgroundBlock from '@/components/ui/BackgroundBlock';
@@ -13,6 +14,9 @@ export default function Home() {
           <BannerBetween />
         </CenterContent>
         <PictureWall />
+        <CenterContent>
+          <Features />
+        </CenterContent>
         <CenterContent>
           <LogoCloud />
         </CenterContent>
