@@ -3,6 +3,7 @@ import Features from '@/components/partials/Features';
 import LogoCloud from '@/components/partials/LogoCloud';
 import PictureWall from '@/components/partials/PictureWall';
 import ProductPitch from '@/components/partials/ProductPitch';
+import CustomerReviews from '@/components/partials/CustomerReviews';
 import BackgroundBlock from '@/components/ui/BackgroundBlock';
 import CenterContent from '@/components/ui/CenterContent';
 
@@ -21,6 +22,7 @@ export default function Home() {
         <CenterContent>
           <ProductPitch />
         </CenterContent>
+        <CustomerReviews />
         <CenterContent>
           <LogoCloud />
         </CenterContent>
