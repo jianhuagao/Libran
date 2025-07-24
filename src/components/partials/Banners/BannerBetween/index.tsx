@@ -5,9 +5,9 @@ export default function BannerBetween() {
   return (
     <div className="flex flex-col items-center justify-between gap-12 lg:flex-row lg:gap-2">
       <AnimatedShow inViewShow className="flex flex-col items-start gap-4">
-        <h1 className="text-5xl font-bold">Home</h1>
+        <h1 className="max-w-96 text-4xl font-bold">Innovate. Integrate. Elevate.</h1>
         <h3 className="mb-3 max-w-96 text-xl opacity-80">
-          This is an example website where you can place the subtitle of your website
+          A comprehensive platform demonstrating modern web development practices and user experience design
         </h3>
         <button className="group relative inline-flex cursor-pointer items-center justify-center rounded-xl bg-white/60 px-6 py-2 text-sm text-emerald-800 ring-1 shadow-black/10 ring-gray-300/50 backdrop-blur-md transition-all duration-300 hover:shadow-lg dark:bg-[rgba(255,255,255,0.15)] dark:text-white dark:shadow dark:shadow-white/10 dark:ring-white/20 dark:hover:ring-white/50">
           <span className="relative z-10">START</span>
@@ -27,14 +27,13 @@ export default function BannerBetween() {
               height={80}
               src="/img/wallpaper/c8.jpg"
               className="float-right ml-4 h-[80px] w-[140px] rounded-lg object-cover shadow-2xl"
-              alt=""
+              alt="Abstract technology visualization"
             />
             <p className="text-justify text-sm leading-7 text-gray-700 first-letter:float-left first-letter:mr-3 first-letter:text-5xl first-letter:font-bold dark:text-gray-300">
-              Mars remains the primary target for near-future exploration. With missions like NASA’s Artemis program aiming to
-              establish a sustainable presence on the Moon, Mars is seen as the next logical step. Plans are underway to send
-              the first crewed mission to Mars in the 2030s, which will involve testing life-support systems, creating habitats
-              using Martian soil, and generating oxygen from the planet’s atmosphere. These initiatives are not only scientific
-              in nature but also serve as practice for longer, more distant missions.
+              Modern digital platforms require integrated solutions that balance performance, scalability, and user experience.
+              Our framework combines cutting-edge technologies with intuitive design principles to create systems that adapt to
+              evolving business needs. With modular architecture and cloud-native capabilities, organizations can accelerate
+              development cycles while maintaining robust security standards across all touchpoints.
             </p>
           </div>
         </div>
