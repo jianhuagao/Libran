@@ -2,6 +2,7 @@
 @import "./theme.css";
 @import "./scrollbar.css";
 @import "./keyframes.css";
+@import "lenis/dist/lenis.css";
 
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/forms";

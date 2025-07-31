@@ -8,23 +8,23 @@ export default function Features() {
       description: 'Quickly and accurately find the content you need with multiple search methods.'
     },
     {
-      icon: '🔄',
+      icon: '🌠',
       title: 'Real-time Sync',
       description: 'Automatically sync data across devices to ensure you access the latest information anywhere.'
     },
     {
-      icon: '🔒',
+      icon: '🌠',
       title: 'Secure Encryption',
       description: 'Advanced encryption technology to protect your privacy and data security.'
     },
     {
-      icon: '📊',
+      icon: '🌠',
       title: 'Data Analytics',
       description: 'Intuitive data visualization and in-depth analysis to help you make informed decisions.'
     },
-    { icon: '⚙️', title: 'Custom Settings', description: 'Flexible personalization options to create your专属 experience.' },
+    { icon: '🌠', title: 'Custom Settings', description: 'Flexible personalization options to create your专属 experience.' },
     {
-      icon: '📱',
+      icon: '🌠',
       title: 'Mobile Optimization',
       description: 'Perfect support for various mobile devices to work efficiently anytime, anywhere.'
     }

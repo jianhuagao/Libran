@@ -15,13 +15,13 @@ export default function Home() {
         <CenterContent>
           <BannerBetween />
         </CenterContent>
-        <PictureWall />
         <CenterContent>
           <Features />
         </CenterContent>
         <CenterContent>
           <ProductPitch />
         </CenterContent>
+        <PictureWall />
         <CustomerReviews />
         <CenterContent>
           <LogoCloud />
