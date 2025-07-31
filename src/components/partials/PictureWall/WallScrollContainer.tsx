@@ -1,6 +1,7 @@
 'use client';
 
-import { useLayoutEffect, useRef, useState, useCallback, ReactNode } from 'react';
+import { useLayoutEffect, useRef, useCallback, ReactNode } from 'react';
+import { motion } from 'framer-motion';
 
 const easeOutQuad = (t: number) => t * (2 - t);
 
@@ -10,18 +11,16 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
   const contentRef = useRef<HTMLDivElement>(null);
   const stickyDivRef = useRef<HTMLDivElement>(null);
 
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [maxScroll, setMaxScroll] = useState(0);
-
   const isStickyActiveRef = useRef(false);
   const stickyStartScrollYRef = useRef(0);
   const rafRef = useRef<number | null>(null);
+  const maxScrollRef = useRef(0);
 
   const calculateMaxScroll = useCallback(() => {
     if (contentRef.current && galleryRef.current) {
       const contentWidth = contentRef.current.scrollWidth;
       const galleryWidth = galleryRef.current.clientWidth;
-      setMaxScroll(Math.max(0, contentWidth - galleryWidth + 32));
+      maxScrollRef.current = Math.max(0, contentWidth - galleryWidth + 32);
     }
   }, []);
 
@@ -29,7 +28,7 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
 
     rafRef.current = requestAnimationFrame(() => {
-      if (!containerRef.current || !stickyDivRef.current) return;
+      if (!containerRef.current || !stickyDivRef.current || !contentRef.current) return;
 
       const rect = stickyDivRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
@@ -47,9 +46,10 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
         const stickyHeight = stickyDivRef.current.offsetHeight;
         const totalRange = containerHeight - windowHeight + stickyHeight;
         const scrolled = window.scrollY - stickyStartScrollYRef.current;
-
         const progress = Math.min(1, Math.max(0, scrolled / totalRange));
-        setScrollProgress(progress);
+
+        const scrollX = easeOutQuad(progress) * maxScrollRef.current;
+        contentRef.current.style.transform = `translateX(-${scrollX}px)`;
       }
     });
   }, []);
@@ -68,7 +68,7 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
     window.addEventListener('resize', onResize);
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    setTimeout(handleScroll, 100); // 初始化滚动状态
+    setTimeout(handleScroll, 100);
 
     return () => {
       window.removeEventListener('resize', onResize);
@@ -77,23 +77,23 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
     };
   }, [calculateMaxScroll, handleScroll]);
 
-  const scrollX = maxScroll > 0 ? easeOutQuad(scrollProgress) * maxScroll : 0;
-
   return (
     <div ref={containerRef} className="relative" style={{ height: '100vh' }}>
       <div ref={stickyDivRef} className="sticky top-[20%] flex items-center justify-center">
-        {/* <div ref={galleryRef} className="hiddenScrollbar w-full overflow-x-auto px-4 py-20" style={{ willChange: 'transform' }}> */}
-        <div ref={galleryRef} className="w-full overflow-x-hidden px-4 py-20" style={{ willChange: 'transform' }}>
-          <div
+        <div ref={galleryRef} className="w-full touch-none overflow-x-hidden px-4 py-20" style={{ willChange: 'transform' }}>
+          <motion.div
+            layoutScroll
             ref={contentRef}
-            className="flex gap-8 transition-transform duration-300 ease-out"
+            className="flex gap-8"
             style={{
-              transform: `translateX(-${scrollX}px)`,
-              willChange: 'transform'
+              willChange: 'transform',
+              transform: 'translateX(0)',
+              transformOrigin: 'left center',
+              transformStyle: 'preserve-3d'
             }}
           >
             {children}
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
