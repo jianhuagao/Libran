@@ -1,5 +1,3 @@
-'use client';
-
 import AnimatedShow from '@/components/ui/motions/AnimatedShow';
 import Image from 'next/image';
 
