@@ -22,7 +22,11 @@ export default function Features() {
       title: 'Data Analytics',
       description: 'Intuitive data visualization and in-depth analysis to help you make informed decisions.'
     },
-    { icon: '🌠', title: 'Custom Settings', description: 'Flexible personalization options to create your专属 experience.' },
+    {
+      icon: '🌠',
+      title: 'Custom Settings',
+      description: 'Flexible personalization options to create your exclusive experience.'
+    },
     {
       icon: '🌠',
       title: 'Mobile Optimization',
@@ -31,19 +35,27 @@ export default function Features() {
   ];
 
   return (
-    <AnimatedShow scale={0.7} inViewShow className="grid w-full grid-cols-1 gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
-      {features.map((feature, index) => (
-        <div
-          key={index}
-          className="hover:border-primary/50 flex flex-col gap-3 rounded-4xl border border-gray-200 bg-white/80 p-5 transition-[border-color] dark:border-white/5 dark:bg-[#252529]/70"
-        >
-          <div className="rounded-primary flex size-10 items-center justify-center bg-[#f6f6f7]/80 text-lg dark:bg-black/80">
-            {feature.icon}
+    <>
+      <AnimatedShow inViewShow className="my-10 flex flex-col gap-5">
+        <h1 className="text-center text-2xl font-semibold">Powerful Features</h1>
+        <h3 className="text-center opacity-90">
+          Discover the advanced capabilities that make our platform stand out from the competition.
+        </h3>
+      </AnimatedShow>
+      <AnimatedShow scale={0.7} inViewShow className="grid w-full grid-cols-1 gap-8 pb-12 sm:grid-cols-2 lg:grid-cols-3">
+        {features.map((feature, index) => (
+          <div
+            key={index}
+            className="hover:border-primary/50 flex flex-col gap-3 rounded-4xl border border-gray-200 bg-white/80 p-5 shadow transition-[border-color] dark:border-white/5 dark:bg-[#252529]/70"
+          >
+            <div className="flex size-10 items-center justify-center rounded-full bg-[#f6f6f7]/80 text-lg dark:bg-black/80">
+              {feature.icon}
+            </div>
+            <p className="text-base font-semibold opacity-80">{feature.title}</p>
+            <p className="text-sm text-gray-800 dark:text-gray-400">{feature.description}</p>
           </div>
-          <p className="text-base font-semibold opacity-80">{feature.title}</p>
-          <p className="text-sm text-gray-800 dark:text-gray-400">{feature.description}</p>
-        </div>
-      ))}
-    </AnimatedShow>
+        ))}
+      </AnimatedShow>
+    </>
   );
 }

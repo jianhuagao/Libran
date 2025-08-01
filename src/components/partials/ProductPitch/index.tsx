@@ -15,7 +15,7 @@ export default function ProductPitch() {
     <AnimatedShow scale={0.6} inViewShow className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
       <div>
         <h1 className="max-w-2xl text-4xl font-bold">Modern Solutions for Tomorrow&apos;s Digital Landscape</h1>
-        <h3 className="mt-6 mb-3 max-w-2xl text-xl opacity-80">
+        <h3 className="my-8 max-w-2xl text-xl opacity-80">
           Discover a versatile platform showcasing cutting-edge development techniques and innovative user experience design
           principles
         </h3>
