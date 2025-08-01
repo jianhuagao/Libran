@@ -4,7 +4,7 @@ import Image from 'next/image';
 export default memo(function Footer() {
   return (
     <footer className="relative z-50 border-t border-[#eaeaea] text-sm text-black/70 transition-all dark:border-[#333333] dark:text-white/70">
-      <div className="mx-auto mb-0 flex flex-col flex-wrap items-start gap-1 px-10 pt-12 pb-20 sm:flex-row sm:px-32 lg:px-72">
+      <div className="mx-auto mb-0 flex flex-col items-start gap-1 px-10 pt-12 pb-20 md:flex-row md:px-20 xl:px-72">
         <div>
           <div className="flex items-end gap-3">
             <Image src="/img/logo.svg" className="ml-1 opacity-70" width={28} height={28} alt="" />
@@ -24,7 +24,7 @@ export default memo(function Footer() {
             </a>
           </div>
         </div>
-        <div className="mt-5 grid grid-cols-2 gap-16 sm:mt-0 sm:ml-auto">
+        <div className="mt-5 grid grid-cols-2 gap-16 md:mt-0 md:ml-auto">
           <div>
             <p className="mb-3 text-black/80 dark:text-white/80">SITE</p>
             <ul className="leading-5 opacity-60">
