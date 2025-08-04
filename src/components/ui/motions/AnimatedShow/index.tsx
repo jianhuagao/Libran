@@ -1,11 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { isValidElement, memo, useMemo } from 'react';
-
-type WithDataOriginalClassName = {
-  'data-originalclassname'?: string;
-};
+import { memo, useMemo } from 'react';
 
 interface AnimatedShowProps {
   children: React.ReactNode[] | React.ReactNode;
@@ -15,6 +11,7 @@ interface AnimatedShowProps {
   duration?: number;
   childDuration?: number;
   staggerChildren?: number;
+  itemClassNames?: string[];
 }
 
 const AnimatedShow = ({
@@ -24,6 +21,7 @@ const AnimatedShow = ({
   duration = 1,
   childDuration = 0.4,
   staggerChildren = 0.2,
+  itemClassNames = [],
   inViewShow = false
 }: AnimatedShowProps) => {
   const animationVariants = useMemo(
@@ -71,13 +69,8 @@ const AnimatedShow = ({
       className={className}
     >
       {arrChildren.map((child, index) => {
-        let originalClassName = '';
-        if (isValidElement(child)) {
-          const props = child.props as unknown as WithDataOriginalClassName;
-          originalClassName = props['data-originalclassname'] ?? '';
-        }
         return (
-          <motion.span key={index} className={originalClassName} variants={childVariants}>
+          <motion.span key={index} className={itemClassNames[index] || ''} variants={childVariants}>
             {child}
           </motion.span>
         );
