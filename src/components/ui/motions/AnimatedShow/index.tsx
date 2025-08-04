@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { isValidElement, memo, useMemo } from 'react';
 
 type WithDataOriginalClassName = {
-  'data-originalClassName'?: string;
+  'data-originalclassname'?: string;
 };
 
 interface AnimatedShowProps {
@@ -74,7 +74,7 @@ const AnimatedShow = ({
         let originalClassName = '';
         if (isValidElement(child)) {
           const props = child.props as unknown as WithDataOriginalClassName;
-          originalClassName = props['data-originalClassName'] ?? '';
+          originalClassName = props['data-originalclassname'] ?? '';
         }
         return (
           <motion.span key={index} className={originalClassName} variants={childVariants}>
