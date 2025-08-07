@@ -3,8 +3,14 @@ import DarkSwitch from '@/components/ui/DarkSwitch';
 import GithubIcon from '@/components/ui/GithubIcon';
 import HeaderClientWrapper from './HeaderClientWrapper';
 import Link from 'next/link';
+import PopHeaderMenu from './PopHeaderMenu';
 
-const urls = [
+export interface UrlItem {
+  href: string;
+  label: string;
+}
+
+const urls: UrlItem[] = [
   { href: '/', label: 'Home' },
   { href: '/pricing', label: 'Pricing' },
   { href: '/signin', label: 'Signin' }
@@ -59,8 +65,19 @@ export default function Header() {
         }
         optionsBlock={
           <>
-            <DarkSwitch />
-            <GithubIcon />
+            <div className="hidden items-center gap-4 md:flex">
+              <DarkSwitch />
+              <GithubIcon />
+            </div>
+            <PopHeaderMenu
+              urls={urls}
+              optionsBlock={
+                <>
+                  <DarkSwitch />
+                  <GithubIcon />
+                </>
+              }
+            />
           </>
         }
       />

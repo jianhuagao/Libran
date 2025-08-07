@@ -18,7 +18,7 @@ export default function BannerBetween() {
       <AnimatedShow
         inViewShow
         scale={0.6}
-        className="group size-[400px] rounded-full border border-white/20 bg-white/5 p-2 shadow-2xl backdrop-blur dark:bg-black/10"
+        className="group size-[400px] max-h-[92vmin] max-w-[92vmin] rounded-full border border-white/20 bg-white/5 p-2 shadow-2xl backdrop-blur dark:bg-black/10"
       >
         <div className="relative size-full rounded-full border border-white/10 bg-white/20 p-10 shadow-2xl transition-all duration-700 group-hover:saturate-200 dark:bg-black/80">
           <Image
