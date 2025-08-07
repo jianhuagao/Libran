@@ -1,3 +1,7 @@
+'use client';
+
+import { useTheme } from '@/hooks/useTheme';
+
 const directionMap = {
   toTop: '0deg',
   toBottom: '180deg',
@@ -5,24 +9,34 @@ const directionMap = {
   toRight: '90deg'
 };
 
-export default function BackgroundBlock(
-  //新增背景渐变方向
-  props: {
-    direction?: 'toTop' | 'toBottom' | 'toLeft' | 'toRight';
-  }
-) {
-  // return <div className="absolute inset-0 z-0 bg-amber-200"></div>;
+import { useState, useEffect } from 'react';
 
+export default function BackgroundBlock(props: { direction?: 'toTop' | 'toBottom' | 'toLeft' | 'toRight' }) {
+  const { theme } = useTheme();
   const { direction = 'toBottom' } = props;
-
   const gradientDirection = directionMap[direction];
+  const [isVisible, setIsVisible] = useState(false); // 控制图片显示状态
+
+  // 页面加载后延迟显示图片，确保主题已应用
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100); // 100ms延迟，可根据需要调整
+
+    return () => clearTimeout(timer);
+  }, [theme]);
+
+  const bgImage = theme === 'dark' ? '/img/wallpaper/w1.jpg' : '/img/wallpaper/w2.jpg';
+
   return (
-    // <div className="pointer-events-none absolute inset-0 -z-20 bg-green-100 [mask-image:linear-gradient(180deg,white_1%,rgba(255,255,255,0)_98%)] dark:bg-green-800"></div>
     <div
       style={{
-        maskImage: `linear-gradient(${gradientDirection},white 1%,rgba(255,255,255,0) 98%)`
+        maskImage: `linear-gradient(${gradientDirection},white 1%,rgba(255,255,255,0) 98%)`,
+        backgroundImage: isVisible ? `url(${bgImage})` : 'none', // 只有visible时才设置背景图
+        opacity: isVisible ? 1 : 0, // 淡入效果
+        transition: 'opacity 0.3s ease-in-out'
       }}
-      className="pointer-events-none absolute inset-0 -z-20 bg-[url(/img/wallpaper/w2.jpg)] bg-cover bg-center bg-no-repeat dark:bg-[url(/img/wallpaper/w1.jpg)]"
+      className="pointer-events-none absolute inset-0 -z-20 bg-cover bg-center bg-no-repeat"
     ></div>
   );
 }

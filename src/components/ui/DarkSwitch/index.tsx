@@ -1,15 +1,9 @@
 'use client';
-import { memo, useContext } from 'react';
-import ThemeContext from '@/context/themeContext';
+import { memo } from 'react';
+import { useTheme } from '@/hooks/useTheme';
 
 export default memo(function DarkSwitch() {
-  const themeContext = useContext(ThemeContext);
-
-  if (!themeContext) {
-    throw new Error('useContext must be used within a ThemeProvider');
-  }
-
-  const { theme, toggleTheme } = themeContext;
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <label
