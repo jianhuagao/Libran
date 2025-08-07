@@ -31,7 +31,7 @@ export default function PopHeaderMenu({ optionsBlock, urls }: { optionsBlock: Re
                 key="pop-header-menu"
                 initial={{ opacity: 0, y: -50, scale: 0.5, origin: 'top' }}
                 animate={{ opacity: 1, y: 0, scale: 1, origin: 'top' }}
-                exit={{ opacity: 0, y: -50, scale: 0.5, origin: 'top' }}
+                exit={{ opacity: 0, y: -50, scale: 0.9, origin: 'top' }}
                 transition={{
                   type: 'spring',
                   duration: 0.6,
@@ -70,7 +70,7 @@ export default function PopHeaderMenu({ optionsBlock, urls }: { optionsBlock: Re
                       </Link>
                     ))}
                   </div>
-                  <div className="flex items-center justify-end gap-3 p-3">{optionsBlock}</div>
+                  <div className="flex items-center justify-between gap-3 p-3">{optionsBlock}</div>
                 </AnimatedShow>
               </motion.div>,
               document.body

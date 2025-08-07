@@ -73,8 +73,8 @@ export default function Header() {
               urls={urls}
               optionsBlock={
                 <>
-                  <DarkSwitch />
                   <GithubIcon />
+                  <DarkSwitch />
                 </>
               }
             />
