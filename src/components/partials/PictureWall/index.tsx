@@ -28,7 +28,7 @@ export default function DynamicPictureWall() {
                 alt={image.alt}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="transition-all duration-700 ease-in-out group-hover:scale-110"
+                className="object-cover transition-all duration-700 ease-in-out group-hover:scale-110"
                 priority={image.id <= 3} // 仅前3张预加载
               />
               <div className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-black/80 to-transparent p-4">

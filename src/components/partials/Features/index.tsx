@@ -46,7 +46,7 @@ export default function Features() {
         {features.map((feature, index) => (
           <div
             key={index}
-            className="hover:border-primary/50 flex flex-col gap-3 rounded-4xl border border-gray-200 bg-white/80 p-5 shadow transition-[border-color] dark:border-white/5 dark:bg-[#252529]/70"
+            className="hover:border-primary/50 flex flex-col gap-3 rounded-4xl border border-gray-200 bg-white/60 p-5 backdrop-blur-md transition-[border-color] dark:border-white/5 dark:bg-[#252529]/70"
           >
             <div className="flex size-10 items-center justify-center rounded-full bg-[#f6f6f7]/80 text-lg dark:bg-black/80">
               {feature.icon}

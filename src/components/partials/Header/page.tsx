@@ -31,7 +31,7 @@ export default function Header() {
                 href={item.href}
                 target={item.target}
                 rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
-                className="hover:text-primary rounded-primary cursor-pointer px-3 py-2 text-sm transition-all hover:bg-gray-500/15 dark:hover:bg-white/20"
+                className="rounded-primary cursor-pointer px-3 py-2 text-sm transition-all hover:bg-gray-500/15 dark:hover:bg-white/20"
               >
                 {item.label.charAt(0).toUpperCase() + item.label.slice(1)}
               </Link>

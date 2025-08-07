@@ -29,7 +29,7 @@ export default function PopHeaderMenu({ optionsBlock, urls }: { optionsBlock: Re
               <motion.div
                 layout
                 key="pop-header-menu"
-                initial={{ opacity: 0, y: -50, scale: 0.5, origin: 'top' }}
+                initial={{ opacity: 0, y: -50, scale: 0.8, origin: 'top' }}
                 animate={{ opacity: 1, y: 0, scale: 1, origin: 'top' }}
                 exit={{ opacity: 0, y: -50, scale: 0.9, origin: 'top' }}
                 transition={{
@@ -66,7 +66,7 @@ export default function PopHeaderMenu({ optionsBlock, urls }: { optionsBlock: Re
                         target={item.target}
                         rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
                         onClick={() => setIsOpen(false)}
-                        className="hover:text-primary rounded-primary cursor-pointer p-3 text-sm transition-all hover:bg-gray-500/15 dark:hover:bg-white/20"
+                        className="rounded-primary cursor-pointer p-3 text-sm transition-all hover:bg-gray-500/15 dark:hover:bg-white/20"
                       >
                         {item.label.charAt(0).toUpperCase() + item.label.slice(1)}
                       </Link>
