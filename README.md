@@ -57,27 +57,6 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the result.
 
-## 📁 Project Structure
-
-libran/
-├── public/ # Static resources
-│ ├── fonts/ # Font files
-│ └── img/ # Image resources
-├── src/
-│ ├── app/ # Application routes and pages
-│ │ ├── (auth)/ # Authentication related pages
-│ │ └── (main)/ # Main pages
-│ ├── components/ # Components
-│ │ ├── partials/ # Partial components
-│ │ └── ui/ # UI components
-│ ├── context/ # Context
-│ └── styles/ # Styles
-├── .gitignore # Git ignore file
-├── next.config.ts # Next.js configuration
-├── package.json # Project dependencies
-├── postcss.config.mjs # PostCSS configuration
-└── tsconfig.json # TypeScript configuration
-
 ## 🌐 Deployment
 
 ### Vercel Deployment
