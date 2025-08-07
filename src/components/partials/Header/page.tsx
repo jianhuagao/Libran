@@ -8,12 +8,14 @@ import PopHeaderMenu from './PopHeaderMenu';
 export interface UrlItem {
   href: string;
   label: string;
+  target?: string;
 }
 
 const urls: UrlItem[] = [
   { href: '/', label: 'Home' },
   { href: '/pricing', label: 'Pricing' },
-  { href: '/signin', label: 'Signin' }
+  { href: '/signin', label: 'Signin' },
+  { href: 'https://www.cloveui.asia', label: 'TwinkleUI', target: '_blank' }
 ];
 
 export default function Header() {
@@ -27,6 +29,8 @@ export default function Header() {
               <Link
                 key={item.label}
                 href={`${item.href}`}
+                target={item.target}
+                rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
                 className="hover:text-primary rounded-primary cursor-pointer px-3 py-2 text-sm transition-all hover:bg-gray-500/15 dark:hover:bg-white/20"
               >
                 {item.label.charAt(0).toUpperCase() + item.label.slice(1)}
@@ -41,7 +45,7 @@ export default function Header() {
                 type="text"
                 aria-label="inputtext"
                 name="inputtext"
-                className="w-80 rounded-full border border-black/5 bg-white/40 py-1.5 pr-14 pl-3 text-sm/6 backdrop-blur-2xl focus:border-black/5 focus:ring-2 focus:ring-gray-50/50 focus:outline-hidden dark:text-white dark:placeholder:text-white/80 focus:dark:ring-white/50"
+                className="max-w-80 rounded-full border border-black/5 bg-white/40 py-1.5 pr-14 pl-3 text-sm/6 backdrop-blur-2xl focus:border-black/5 focus:ring-2 focus:ring-gray-50/50 focus:outline-hidden dark:text-white dark:placeholder:text-white/80 focus:dark:ring-white/50"
                 placeholder="Search..."
               />
               <div className="group absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer rounded-full px-2 py-1.5 opacity-40 transition-all hover:bg-black/10 hover:px-4 hover:shadow active:scale-90 dark:hover:bg-white/20">

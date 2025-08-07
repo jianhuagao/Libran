@@ -63,6 +63,8 @@ export default function PopHeaderMenu({ optionsBlock, urls }: { optionsBlock: Re
                       <Link
                         key={item.label}
                         href={`${item.href}`}
+                        target={item.target}
+                        rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
                         onClick={() => setIsOpen(false)}
                         className="hover:text-primary rounded-primary cursor-pointer p-3 text-sm transition-all hover:bg-gray-500/15 dark:hover:bg-white/20"
                       >
