@@ -62,7 +62,7 @@ export default function PopHeaderMenu({ optionsBlock, urls }: { optionsBlock: Re
                     {urls.map(item => (
                       <Link
                         key={item.label}
-                        href={`${item.href}`}
+                        href={item.href}
                         target={item.target}
                         rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
                         onClick={() => setIsOpen(false)}

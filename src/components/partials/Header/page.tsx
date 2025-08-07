@@ -28,7 +28,7 @@ export default function Header() {
             {urls.map(item => (
               <Link
                 key={item.label}
-                href={`${item.href}`}
+                href={item.href}
                 target={item.target}
                 rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
                 className="hover:text-primary rounded-primary cursor-pointer px-3 py-2 text-sm transition-all hover:bg-gray-500/15 dark:hover:bg-white/20"
