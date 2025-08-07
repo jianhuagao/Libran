@@ -1,8 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Libran
 
-## Getting Started
+A website example developed with [TwinkleUI](https://twinkleui.vercel.app), built on Next.js, offering an elegant user interface and smooth interactive experience.
 
-First, run the development server:
+## ✨ Features
+
+- Built with Next.js 15+ using App Router
+- Responsive design, adapting to various device sizes
+- Rich animation effects implemented with framer-motion
+- Dark mode switching support
+- Modular component design, easy to extend and maintain
+- Style management with Tailwind CSS
+- Optimized performance and loading speed
+
+## 🛠️ Technology Stack
+
+- **Framework**: Next.js 15+
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Animation**: framer-motion
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- npm/yarn/pnpm/bun
+
+### Installation
+
+```bash
+# Clone the project
+git clone https://github.com/jianhuagao/Libran
+cd Libran
+
+# Install dependencies
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+### Run Development Server
 
 ```bash
 npm run dev
@@ -14,23 +55,54 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+libran/
+├── public/ # Static resources
+│ ├── fonts/ # Font files
+│ └── img/ # Image resources
+├── src/
+│ ├── app/ # Application routes and pages
+│ │ ├── (auth)/ # Authentication related pages
+│ │ └── (main)/ # Main pages
+│ ├── components/ # Components
+│ │ ├── partials/ # Partial components
+│ │ └── ui/ # UI components
+│ ├── context/ # Context
+│ └── styles/ # Styles
+├── .gitignore # Git ignore file
+├── next.config.ts # Next.js configuration
+├── package.json # Project dependencies
+├── postcss.config.mjs # PostCSS configuration
+└── tsconfig.json # TypeScript configuration
 
-## Learn More
+## 🌐 Deployment
 
-To learn more about Next.js, take a look at the following resources:
+### Vercel Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Install Vercel CLI:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm install -g vercel
+```
 
-## Deploy on Vercel
+2. Login and deploy:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+vercel login
+vercel
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Other Deployment Methods
+
+Please refer to the [Next.js Deployment Documentation](https://nextjs.org/docs/app/building-your-application/deploying).
+
+## 🤝 Contribution
+
+Contributions, issues, and feature requests are welcome!
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
