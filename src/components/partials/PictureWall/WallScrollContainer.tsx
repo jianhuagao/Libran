@@ -17,6 +17,9 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
   const isStickyActiveRef = useRef(false);
   const stickyStartScrollYRef = useRef(0);
 
+  const targetProgressRef = useRef(0);
+  const progressRef = useRef(0);
+
   const lenis = useLenis();
 
   const calculateMaxScroll = useCallback(() => {
@@ -47,13 +50,42 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
       const totalRange = containerHeight - windowHeight + stickyHeight;
       const scrolled = lenis.scroll - stickyStartScrollYRef.current;
 
-      const progress = Math.min(1, Math.max(0, scrolled / totalRange));
-      setScrollProgress(progress);
+      const rawProgress = Math.min(1, Math.max(0, scrolled / totalRange));
+      targetProgressRef.current = rawProgress;
     }
   }, [lenis]);
 
+  // 平滑动画：将 targetProgressRef 的值缓慢过渡到 scrollProgress
+  useLayoutEffect(() => {
+    let animationFrame: number;
+
+    const update = () => {
+      const current = progressRef.current;
+      const target = targetProgressRef.current;
+      const alpha = 0.1;
+
+      const newProgress = current + (target - current) * alpha;
+
+      // 如果变化很小就不再更新
+      if (Math.abs(newProgress - current) > 0.001) {
+        progressRef.current = newProgress;
+        setScrollProgress(newProgress);
+      }
+
+      animationFrame = requestAnimationFrame(update);
+    };
+
+    animationFrame = requestAnimationFrame(update);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+    };
+  }, []);
+
+  // 初始化 scroll 监听 & resize 处理
   useLayoutEffect(() => {
     calculateMaxScroll();
+
     let resizeTimer: NodeJS.Timeout;
 
     const onResize = () => {
@@ -67,21 +99,21 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
 
     const unsubscribe = lenis?.on('scroll', handleLenisScroll);
 
-    // 初始化滚动状态
     setTimeout(() => {
       handleLenisScroll();
     }, 100);
 
     return () => {
       window.removeEventListener('resize', onResize);
-      unsubscribe?.(); // 卸载 lenis scroll 监听
+      unsubscribe?.();
     };
   }, [calculateMaxScroll, handleLenisScroll, lenis]);
 
+  // 应用缓动后的 scrollProgress 映射为 translateX
   const scrollX = maxScroll > 0 ? easeOutQuad(scrollProgress) * maxScroll : 0;
 
   return (
-    <div ref={containerRef} className="relative h-[200vh] md:h-[150vh]">
+    <div ref={containerRef} className="relative" style={{ height: '100vh' }}>
       <div ref={stickyDivRef} className="sticky top-[20%] flex items-center justify-center">
         <div ref={galleryRef} className="w-full overflow-x-hidden px-4 py-20" style={{ willChange: 'transform' }}>
           <div
