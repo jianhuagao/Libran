@@ -30,6 +30,16 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
 
     // 初始 & resize 时读取并缓存
     const computeLayout = () => {
+      const diff = con.scrollWidth - gal.clientWidth;
+      if (diff <= 0) {
+        maxScrollRef.current = 0;
+        // 居中
+        contentRef.current!.style.justifyContent = 'center';
+      } else {
+        maxScrollRef.current = diff + 32;
+        contentRef.current!.style.justifyContent = 'flex-start';
+      }
+
       // 最大水平位移
       maxScrollRef.current = Math.max(0, con.scrollWidth - gal.clientWidth + 32);
       // 容器在文档中的位置和高度
