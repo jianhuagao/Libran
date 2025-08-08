@@ -86,7 +86,7 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
         <div ref={galleryRef} className="w-full overflow-x-hidden px-4 py-20" style={{ willChange: 'transform' }}>
           <div
             ref={contentRef}
-            className="flex gap-8 md:transition-transform md:duration-300 md:ease-out"
+            className="flex gap-8 transition-transform duration-300 ease-out"
             style={{
               transform: `translateX(-${scrollX}px)`,
               willChange: 'transform'
