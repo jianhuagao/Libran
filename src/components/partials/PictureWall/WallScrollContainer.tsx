@@ -81,7 +81,7 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
   const scrollX = maxScroll > 0 ? easeOutQuad(scrollProgress) * maxScroll : 0;
 
   return (
-    <div ref={containerRef} className="relative" style={{ height: '100vh' }}>
+    <div ref={containerRef} className="relative h-[200vh] md:h-[150vh]">
       <div ref={stickyDivRef} className="sticky top-[20%] flex items-center justify-center">
         <div ref={galleryRef} className="w-full overflow-x-hidden px-4 py-20" style={{ willChange: 'transform' }}>
           <div
