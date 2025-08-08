@@ -6,6 +6,7 @@ import ProductPitch from '@/components/partials/ProductPitch';
 import CustomerReviews from '@/components/partials/CustomerReviews';
 import BackgroundBlock from '@/components/ui/BackgroundBlock';
 import CenterContent from '@/components/ui/CenterContent';
+import PitchCard from '@/components/partials/PitchCard';
 
 export default function Home() {
   return (
@@ -18,11 +19,13 @@ export default function Home() {
         <CenterContent>
           <Features />
         </CenterContent>
-        <CenterContent>
-          <ProductPitch />
-        </CenterContent>
+
+        <ProductPitch />
         <PictureWall />
         <CustomerReviews />
+        <CenterContent>
+          <PitchCard />
+        </CenterContent>
         <CenterContent>
           <LogoCloud />
         </CenterContent>
