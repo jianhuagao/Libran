@@ -1,42 +1,42 @@
+import Image from 'next/image';
 import AnimatedShow from '@/components/ui/motions/AnimatedShow';
 
 const logos = [
   {
     name: 'Vercel',
-    url: 'https://res.cloudinary.com/dfhp33ufc/image/upload/v1715881430/vercel_wordmark_dark_mhv8u8.svg'
+    url: '/img/logos/Vercel.svg'
   },
   {
     name: 'Nextjs',
-    url: 'https://res.cloudinary.com/dfhp33ufc/image/upload/v1715881475/nextjs_logo_dark_gfkf8m.svg'
+    url: '/img/logos/Nextjs.svg'
   },
   {
     name: 'Prime',
-    url: 'https://res.cloudinary.com/dfhp33ufc/image/upload/v1715276558/logos/t2awrrfzdvmg1chnzyfr.svg'
+    url: '/img/logos/Prime.svg'
   },
   {
     name: 'Trustpilot',
-    url: 'https://res.cloudinary.com/dfhp33ufc/image/upload/v1715276558/logos/tkfspxqmjflfllbuqxsi.svg'
+    url: '/img/logos/Trustpilot.svg'
   },
   {
     name: 'Webflow',
-    url: 'https://res.cloudinary.com/dfhp33ufc/image/upload/v1715276560/logos/nymiivu48d5lywhf9rpf.svg'
+    url: '/img/logos/Webflow.svg'
   },
-
   {
     name: 'Airbnb',
-    url: 'https://res.cloudinary.com/dfhp33ufc/image/upload/v1715276558/logos/pmblusboe7vkw8vxdknx.svg'
+    url: '/img/logos/Airbnb.svg'
   },
   {
     name: 'Tina',
-    url: 'https://res.cloudinary.com/dfhp33ufc/image/upload/v1715276560/logos/afqhiygywyphuou6xtxc.svg'
+    url: '/img/logos/Tina.svg'
   },
   {
     name: 'Stackoverflow',
-    url: 'https://res.cloudinary.com/dfhp33ufc/image/upload/v1715276558/logos/ts1j4mkooxqmscgptafa.svg'
+    url: '/img/logos/Stackoverflow.svg'
   },
   {
-    name: 'mistral',
-    url: 'https://res.cloudinary.com/dfhp33ufc/image/upload/v1715276558/logos/tyos2ayezryjskox3wzs.svg'
+    name: 'Mistral',
+    url: '/img/logos/Mistral.svg'
   }
 ];
 
@@ -53,7 +53,14 @@ const LogoCloud = () => {
           {[1, 2, 3, 4, 5].map(index => (
             <div key={index} className="animate-logo-cloud flex shrink-0 flex-row justify-around gap-6">
               {logos.map((logo, key) => (
-                <img key={key} src={logo.url} className="h-10 w-28 px-2 brightness-0 dark:invert" alt={`${logo.name}`} />
+                <Image
+                  key={key}
+                  src={logo.url}
+                  height={40}
+                  width={112}
+                  className="px-2 brightness-0 dark:invert"
+                  alt={`${logo.name}`}
+                />
               ))}
             </div>
           ))}
