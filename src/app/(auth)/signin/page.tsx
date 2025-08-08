@@ -9,7 +9,7 @@ export default function SigninPage() {
   return (
     <form className="flex min-h-screen flex-col justify-center overflow-hidden p-4">
       <BackgroundDots fadeX />
-      <AnimatedInitial className="relative mx-auto flex h-full w-full max-w-[460px] grow flex-col rounded-2xl border border-gray-200 bg-white/80 p-4 shadow-lg backdrop-blur-2xl transition-[border-color] md:max-h-[600px] dark:border-white/5 dark:bg-[#252529]/70">
+      <AnimatedInitial className="relative mx-auto flex h-full w-full max-w-[460px] grow flex-col rounded-2xl border border-gray-200 bg-white/80 p-4 shadow-xs backdrop-blur-2xl transition-[border-color] md:max-h-[600px] dark:border-white/5 dark:bg-[#252529]/70">
         <AnimatedShow itemClassNames={['', '', '', '', '', 'mt-auto']} className="flex h-full grow flex-col">
           <h1 className="flex items-center justify-center gap-4 py-18 text-3xl font-semibold">
             <Image src="/img/logo.svg" width={26} height={26} alt="" />
@@ -41,7 +41,7 @@ export default function SigninPage() {
               className="group relative inline-flex w-64 cursor-pointer items-center justify-center rounded-lg bg-white/60 px-4 py-2 text-sm text-purple-800 ring-1 shadow-black/10 ring-gray-300/50 backdrop-blur-md transition-all duration-300 hover:shadow-lg dark:bg-[rgba(255,255,255,0.15)] dark:text-white dark:shadow dark:shadow-white/10 dark:ring-white/20 dark:hover:ring-white/50"
             >
               <span className="relative z-10">Continue with Email</span>
-              <span className="pointer-events-none absolute right-2 bottom-2 z-0 size-5 rounded-full bg-purple-400/50 blur-[6px] transition-transform duration-300 ease-in-out group-hover:translate-1/2 dark:bg-purple-400/40"></span>
+              <span className="pointer-events-none absolute right-0 bottom-0 z-0 h-4 w-6 rounded-full bg-purple-400/50 blur-[10px] transition-transform duration-300 ease-in-out group-hover:translate-1/2 dark:bg-purple-400/40"></span>
             </button>
           </div>
           <p className="mt-10 border-t border-gray-200 pt-4 text-center text-xs opacity-80 dark:border-white/5">
@@ -70,8 +70,8 @@ export default function SigninPage() {
             <DarkSwitch />
           </div>
         </AnimatedShow>
-        <span className="pointer-events-none absolute -top-10 -right-10 z-0 size-25 rounded-full bg-emerald-400/50 blur-[80px] transition-transform duration-300 ease-in-out group-hover:translate-1/2 dark:bg-emerald-400/40"></span>
-        <span className="pointer-events-none absolute -bottom-10 -left-10 z-0 size-30 rounded-full bg-purple-400/50 blur-[80px] transition-transform duration-300 ease-in-out group-hover:translate-1/2 dark:bg-purple-400/40"></span>
+        <span className="pointer-events-none absolute -top-10 -right-10 z-0 size-25 rounded-full bg-emerald-400/50 blur-[120px] transition-transform duration-300 ease-in-out group-hover:translate-1/2 dark:bg-emerald-400/40 dark:blur-[80px]"></span>
+        <span className="pointer-events-none absolute -bottom-10 -left-10 z-0 size-30 rounded-full bg-purple-400/50 blur-[120px] transition-transform duration-300 ease-in-out group-hover:translate-1/2 dark:bg-purple-400/40 dark:blur-[80px]"></span>
       </AnimatedInitial>
     </form>
   );
