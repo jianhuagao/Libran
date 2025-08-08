@@ -9,9 +9,12 @@ export default memo(function Footer() {
           <div className="flex items-end gap-3">
             <Image src="/img/logo.svg" className="ml-1 opacity-70" width={28} height={28} alt="" />
             <span className="text-xl font-semibold">Libran</span>
+            <p className="text-xs/6 font-medium text-zinc-500 dark:text-zinc-400">
+              v1.0.0 @{process.env.NEXT_PUBLIC_BUILD_VERSION}
+            </p>
           </div>
           <div className="mt-5 flex flex-wrap items-center">
-            © 2024 Libran
+            © 2025 Libran
             <a
               className="text-primary ml-1 hover:underline"
               href="https://github.com/jianhuagao/Libran?tab=MIT-1-ov-file#readme"
