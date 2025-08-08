@@ -19,10 +19,10 @@ export default function DynamicPictureWall() {
       {images.map(image => (
         <div
           key={image.id}
-          className="group relative flex-shrink-0 transform transition-all duration-500 ease-in-out hover:scale-105 hover:rotate-0"
+          className="group relative flex-shrink-0 transform transition-all duration-500 ease-in-out hover:scale-105"
         >
           <div className="h-[400px] w-[300px] rounded-2xl border border-white/20 bg-white/5 p-2 shadow-lg backdrop-blur-lg">
-            <div className="relative flex h-full w-full flex-col gap-1 overflow-hidden rounded-xl border border-white/10 bg-white/90 p-4 shadow-2xl dark:bg-black/80">
+            <div className="relative flex h-full w-full flex-col gap-1 overflow-hidden rounded-xl border border-white/10 bg-white/90 shadow-2xl dark:bg-black/80">
               <Image
                 src={image.src}
                 alt={image.alt}

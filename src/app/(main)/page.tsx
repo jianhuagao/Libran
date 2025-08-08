@@ -1,4 +1,4 @@
-import BannerBetween from '@/components/partials/Banners/BannerBetween';
+import BannerBetween from '@/components/partials/Banners';
 import Features from '@/components/partials/Features';
 import LogoCloud from '@/components/partials/LogoCloud';
 import PictureWall from '@/components/partials/PictureWall';
