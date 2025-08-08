@@ -1,5 +1,6 @@
 'use client';
 
+import { useLenis } from 'lenis/react';
 import { useLayoutEffect, useRef, useState, useCallback, ReactNode } from 'react';
 
 const easeOutQuad = (t: number) => t * (2 - t);
@@ -15,7 +16,8 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
 
   const isStickyActiveRef = useRef(false);
   const stickyStartScrollYRef = useRef(0);
-  const rafRef = useRef<number | null>(null);
+
+  const lenis = useLenis();
 
   const calculateMaxScroll = useCallback(() => {
     if (contentRef.current && galleryRef.current) {
@@ -25,34 +27,30 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
     }
   }, []);
 
-  const handleScroll = useCallback(() => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+  const handleLenisScroll = useCallback(() => {
+    if (!containerRef.current || !stickyDivRef.current || !lenis) return;
 
-    rafRef.current = requestAnimationFrame(() => {
-      if (!containerRef.current || !stickyDivRef.current) return;
+    const rect = stickyDivRef.current.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const isStickyNow = rect.top <= windowHeight * 0.2;
 
-      const rect = stickyDivRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const isStickyNow = rect.top <= windowHeight * 0.2;
+    if (isStickyNow && !isStickyActiveRef.current) {
+      isStickyActiveRef.current = true;
+      stickyStartScrollYRef.current = lenis.scroll;
+    } else if (!isStickyNow && isStickyActiveRef.current) {
+      isStickyActiveRef.current = false;
+    }
 
-      if (isStickyNow && !isStickyActiveRef.current) {
-        isStickyActiveRef.current = true;
-        stickyStartScrollYRef.current = window.scrollY;
-      } else if (!isStickyNow && isStickyActiveRef.current) {
-        isStickyActiveRef.current = false;
-      }
+    if (isStickyActiveRef.current) {
+      const containerHeight = containerRef.current.offsetHeight;
+      const stickyHeight = stickyDivRef.current.offsetHeight;
+      const totalRange = containerHeight - windowHeight + stickyHeight;
+      const scrolled = lenis.scroll - stickyStartScrollYRef.current;
 
-      if (isStickyActiveRef.current) {
-        const containerHeight = containerRef.current.offsetHeight;
-        const stickyHeight = stickyDivRef.current.offsetHeight;
-        const totalRange = containerHeight - windowHeight + stickyHeight;
-        const scrolled = window.scrollY - stickyStartScrollYRef.current;
-
-        const progress = Math.min(1, Math.max(0, scrolled / totalRange));
-        setScrollProgress(progress);
-      }
-    });
-  }, []);
+      const progress = Math.min(1, Math.max(0, scrolled / totalRange));
+      setScrollProgress(progress);
+    }
+  }, [lenis]);
 
   useLayoutEffect(() => {
     calculateMaxScroll();
@@ -66,16 +64,19 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
     };
 
     window.addEventListener('resize', onResize);
-    window.addEventListener('scroll', handleScroll, { passive: true });
 
-    setTimeout(handleScroll, 100); // 初始化滚动状态
+    const unsubscribe = lenis?.on('scroll', handleLenisScroll);
+
+    // 初始化滚动状态
+    setTimeout(() => {
+      handleLenisScroll();
+    }, 100);
 
     return () => {
       window.removeEventListener('resize', onResize);
-      window.removeEventListener('scroll', handleScroll);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      unsubscribe?.(); // 卸载 lenis scroll 监听
     };
-  }, [calculateMaxScroll, handleScroll]);
+  }, [calculateMaxScroll, handleLenisScroll, lenis]);
 
   const scrollX = maxScroll > 0 ? easeOutQuad(scrollProgress) * maxScroll : 0;
 
@@ -85,7 +86,7 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
         <div ref={galleryRef} className="w-full overflow-x-hidden px-4 py-20" style={{ willChange: 'transform' }}>
           <div
             ref={contentRef}
-            className="flex gap-8 transition-transform duration-300 ease-out"
+            className="flex gap-8 md:transition-transform md:duration-300 md:ease-out"
             style={{
               transform: `translateX(-${scrollX}px)`,
               willChange: 'transform'
