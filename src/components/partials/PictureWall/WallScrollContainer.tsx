@@ -2,6 +2,8 @@
 
 import { useLayoutEffect, useRef, useState, useCallback, ReactNode } from 'react';
 
+const easeOutQuad = (t: number) => t * (2 - t);
+
 export default function WallScrollContainer({ children }: { children: ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
@@ -75,7 +77,7 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
     };
   }, [calculateMaxScroll, handleScroll]);
 
-  const scrollX = maxScroll > 0 ? scrollProgress * maxScroll : 0;
+  const scrollX = maxScroll > 0 ? easeOutQuad(scrollProgress) * maxScroll : 0;
 
   return (
     <div ref={containerRef} className="relative" style={{ height: '100vh' }}>
