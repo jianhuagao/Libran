@@ -93,7 +93,7 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
     <div ref={containerRef} className="relative" style={{ height: '100vh' }}>
       <div
         ref={galleryRef}
-        className="sticky top-[20%] w-full overflow-x-hidden px-4 py-20"
+        className="sticky top-0 w-full overflow-x-hidden px-4 py-20 md:top-[20%]"
         style={{ willChange: 'transform' }}
       >
         <div
