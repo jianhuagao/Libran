@@ -10,7 +10,9 @@ const images = [
   { id: 5, src: '/img/wallpaper/c5.jpg', alt: 'City Skyline' },
   { id: 6, src: '/img/wallpaper/c6.jpg', alt: 'Northern Lights' },
   { id: 7, src: '/img/wallpaper/c7.jpg', alt: 'Tropical Beach' },
-  { id: 8, src: '/img/wallpaper/c8.jpg', alt: 'Snowy Mountains' }
+  { id: 8, src: '/img/wallpaper/c8.jpg', alt: 'Snowy Mountains' },
+  { id: 9, src: '/img/wallpaper/w1.jpg', alt: 'Snowy Mountains' },
+  { id: 10, src: '/img/wallpaper/w2.jpg', alt: 'Snowy Mountains' }
 ];
 
 export default function DynamicPictureWall() {
