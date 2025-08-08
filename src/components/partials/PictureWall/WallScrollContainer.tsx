@@ -1,7 +1,6 @@
 'use client';
-
 import { useLenis } from 'lenis/react';
-import { useLayoutEffect, useRef, useState, useCallback, ReactNode } from 'react';
+import { useEffect, useRef, ReactNode } from 'react';
 
 const easeOutQuad = (t: number) => t * (2 - t);
 
@@ -10,43 +9,57 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
   const galleryRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [maxScroll, setMaxScroll] = useState(0);
+  // 缓存值
+  const maxScrollRef = useRef(0);
+  const containerTopRef = useRef(0);
+  const containerHeightRef = useRef(0);
 
+  // 平滑进度
   const targetProgressRef = useRef(0);
   const progressRef = useRef(0);
 
   const lenis = useLenis();
 
-  // 计算最大可滚动距离
-  const calculateMaxScroll = useCallback(() => {
-    if (!galleryRef.current || !contentRef.current) return;
-    const contentWidth = contentRef.current.scrollWidth;
-    const galleryWidth = galleryRef.current.clientWidth;
-    setMaxScroll(Math.max(0, contentWidth - galleryWidth + 32));
-  }, []);
+  useEffect(() => {
+    if (!containerRef.current || !galleryRef.current || !contentRef.current) return;
 
-  // 根据容器在视口的位置，计算 0~1 的滚动进度目标值
-  const handleLenisScroll = useCallback(() => {
     const cont = containerRef.current;
-    if (!cont || !lenis) return;
+    const gal = galleryRef.current;
+    const con = contentRef.current;
+    const wh = window.innerHeight;
 
-    const rect = cont.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
+    // 初始 & resize 时读取并缓存
+    const computeLayout = () => {
+      // 最大水平位移
+      maxScrollRef.current = Math.max(0, con.scrollWidth - gal.clientWidth + 32);
+      // 容器在文档中的位置和高度
+      containerTopRef.current = cont.offsetTop;
+      containerHeightRef.current = cont.offsetHeight;
+    };
+    computeLayout();
 
-    // 触发开始：rect.top <= windowHeight/2
-    // 触发结束：rect.bottom <= windowHeight/2
-    const startTrigger = windowHeight / 2;
-    const endTrigger = -rect.height + windowHeight / 2;
+    let resizeTimer: NodeJS.Timeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(computeLayout, 150);
+    });
 
-    // 以窗口中点为参照，计算当前进度
-    const rawProgress = Math.min(1, Math.max(0, (startTrigger - rect.top) / (startTrigger - endTrigger)));
+    // Lenis 滚动监听：计算 rawProgress
+    const off = lenis?.on('scroll', () => {
+      const scrollY = lenis.scroll;
 
-    targetProgressRef.current = rawProgress;
-  }, [lenis]);
+      // 触发开始：容器顶端到达屏幕中点
+      const start = containerTopRef.current - wh / 2;
+      // 触发结束：容器底部到达屏幕中点
+      const end = containerTopRef.current + containerHeightRef.current - wh / 2;
+      const range = end - start;
 
-  // 平滑过渡动画：progressRef → scrollProgress
-  useLayoutEffect(() => {
+      // rawProgress 从 0→1
+      const raw = Math.min(1, Math.max(0, (scrollY - start) / range));
+      targetProgressRef.current = raw;
+    });
+
+    // 动画循环：平滑追踪，并直接写 DOM
     let rafId: number;
     const tick = () => {
       const cur = progressRef.current;
@@ -54,40 +67,24 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
       const alpha = 0.1;
       const next = cur + (tar - cur) * alpha;
 
-      if (Math.abs(next - cur) > 0.0005) {
+      // 差值显著时才更新
+      if (Math.abs(next - cur) >= 0.0001) {
         progressRef.current = next;
-        setScrollProgress(next);
+        const x = easeOutQuad(next) * maxScrollRef.current;
+        contentRef.current!.style.transform = `translateX(-${x}px)`;
       }
 
       rafId = requestAnimationFrame(tick);
     };
     rafId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafId);
-  }, []);
-
-  // 挂载 Lenis 监听 & 计算初始值 & 窗口 resize
-  useLayoutEffect(() => {
-    calculateMaxScroll();
-
-    let resizeTimer: NodeJS.Timeout;
-    const onResize = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(calculateMaxScroll, 150);
-    };
-    window.addEventListener('resize', onResize);
-
-    const off = lenis?.on('scroll', handleLenisScroll);
-    // 初始化一次
-    setTimeout(handleLenisScroll, 100);
 
     return () => {
-      window.removeEventListener('resize', onResize);
+      window.removeEventListener('resize', computeLayout);
       off?.();
+      cancelAnimationFrame(rafId);
+      clearTimeout(resizeTimer);
     };
-  }, [calculateMaxScroll, handleLenisScroll, lenis]);
-
-  // 应用缓动后的进度到 transform
-  const scrollX = maxScroll > 0 ? easeOutQuad(scrollProgress) * maxScroll : 0;
+  }, [lenis]);
 
   return (
     <div ref={containerRef} className="relative" style={{ height: '100vh' }}>
@@ -96,14 +93,7 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
         className="sticky top-0 w-full overflow-x-hidden px-4 py-20 md:top-[20%]"
         style={{ willChange: 'transform' }}
       >
-        <div
-          ref={contentRef}
-          className="flex gap-8"
-          style={{
-            transform: `translateX(-${scrollX}px)`,
-            willChange: 'transform'
-          }}
-        >
+        <div ref={contentRef} className="flex gap-8 will-change-transform">
           {children}
         </div>
       </div>
