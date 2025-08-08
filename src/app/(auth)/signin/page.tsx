@@ -56,13 +56,15 @@ export default function SigninPage() {
               className="group relative inline-flex cursor-pointer items-center justify-center rounded-full bg-white/60 p-2 text-xs text-emerald-800 ring-1 shadow-black/10 ring-gray-300/50 backdrop-blur-md transition-all duration-300 hover:shadow-lg dark:bg-[rgba(255,255,255,0.15)] dark:text-white dark:shadow dark:shadow-white/10 dark:ring-white/20 dark:hover:ring-white/50"
             >
               <span className="relative z-10">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                  <path
-                    fill="currentColor"
-                    fillRule="evenodd"
-                    d="M23 9.195V6.923L12 1L1 6.923v2.272l11-5.923zM5 11v10h14V11h2v12H3V11z"
-                    clipRule="evenodd"
-                  />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="size-5"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
               </span>
             </Link>
