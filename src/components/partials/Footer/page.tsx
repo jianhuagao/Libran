@@ -32,6 +32,11 @@ export default memo(function Footer() {
             <p className="mb-3 text-black/80 dark:text-white/80">SITE</p>
             <ul className="leading-5 opacity-60">
               <li>
+                <a href="https://github.com/jianhuagao/TwinkleUI" target="_blank" className="hover:underline">
+                  TwinkleUI
+                </a>
+              </li>
+              <li>
                 <a href="https://vercel.com" target="_blank" className="hover:underline">
                   Vercel
                 </a>

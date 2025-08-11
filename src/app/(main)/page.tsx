@@ -19,7 +19,6 @@ export default function Home() {
         <CenterContent>
           <Features />
         </CenterContent>
-
         <ProductPitch />
         <PictureWall />
         <CustomerReviews />
