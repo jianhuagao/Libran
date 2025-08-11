@@ -9,7 +9,7 @@ export default function PitchCard() {
     >
       <BackgroundGrid fade={false} color="#cccccc20" cellSize="35px" />
       <div className="mb-6 text-center">
-        <div className="group relative inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-white/60 px-3 py-1.5 text-sm text-xs ring-1 shadow-black/10 ring-gray-300/50 backdrop-blur-md transition-all duration-300 hover:shadow-lg dark:bg-[rgba(255,255,255,0.15)] dark:shadow dark:shadow-white/10 dark:ring-white/20 dark:hover:ring-white/50">
+        <div className="group relative inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-white/60 px-3 py-1.5 text-xs ring-1 shadow-black/10 ring-gray-300/50 backdrop-blur-md transition-all duration-300 hover:shadow-lg dark:bg-[rgba(255,255,255,0.15)] dark:shadow dark:shadow-white/10 dark:ring-white/20 dark:hover:ring-white/50">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
