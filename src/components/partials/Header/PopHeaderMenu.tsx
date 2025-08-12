@@ -1,7 +1,7 @@
 'use client';
 import LogoBlock from '@/components/ui/LogoBlock';
 import AnimatedShow from '@/components/ui/motions/AnimatedShow';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import { useLenis } from 'lenis/react';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';

@@ -2,7 +2,7 @@
 
 import { ReactLenis } from 'lenis/react';
 import type { LenisRef } from 'lenis/react';
-import { cancelFrame, frame } from 'framer-motion';
+import { cancelFrame, frame } from 'motion/react';
 import { useEffect, useRef } from 'react';
 
 export default function LenisRoot() {

@@ -6,7 +6,7 @@ A website example developed with [TwinkleUI](https://twinkleui.vercel.app), buil
 
 - Built with Next.js 15+ using App Router
 - Responsive design, adapting to various device sizes
-- Rich animation effects implemented with framer-motion
+- Rich animation effects implemented with Motion
 - Dark mode switching support
 - Modular component design, easy to extend and maintain
 - Style management with Tailwind CSS
@@ -17,7 +17,7 @@ A website example developed with [TwinkleUI](https://twinkleui.vercel.app), buil
 - **Framework**: Next.js 15+
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **Animation**: framer-motion
+- **Animation**: Motion
 
 ## 🚀 Quick Start
 
