@@ -81,7 +81,10 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
       if (Math.abs(next - cur) >= 0.0001) {
         progressRef.current = next;
         const x = easeOutQuad(next) * maxScrollRef.current;
-        contentRef.current!.style.transform = `translateX(-${x}px)`;
+        // 添加空检查，确保 contentRef.current 不为 null
+        if (contentRef.current) {
+          contentRef.current.style.transform = `translateX(-${x}px)`;
+        }
       }
 
       rafId = requestAnimationFrame(tick);

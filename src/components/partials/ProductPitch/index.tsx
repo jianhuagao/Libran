@@ -56,7 +56,7 @@ export default function ProductPitch() {
               height={200}
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 400px"
             />
-            <AnimatedScrollMove x={30} y={30}>
+            <AnimatedScrollMove x={40} y={40}>
               <Image
                 className="absolute -top-10 left-20 w-full max-w-[200px] -rotate-5 rounded-lg shadow-2xl transition-transform duration-500 ease-in-out group-hover:translate-2 sm:max-w-sm md:max-w-md"
                 src="/img/screenshot/t3.jpg"
@@ -66,7 +66,7 @@ export default function ProductPitch() {
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 400px"
               />
             </AnimatedScrollMove>
-            <AnimatedScrollMove x={50} y={50} delay={0.1}>
+            <AnimatedScrollMove x={60} y={60} delay={0.1}>
               <Image
                 className="absolute top-0 left-40 w-full max-w-[200px] rounded-lg shadow-2xl transition-transform duration-500 ease-in-out group-hover:translate-4 sm:max-w-sm md:max-w-md"
                 src="/img/screenshot/t1.png"

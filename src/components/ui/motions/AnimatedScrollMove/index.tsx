@@ -14,7 +14,7 @@ interface ScrollMoveProps {
 export default function ScrollMove({ children, x = 0, y = 0, duration = 0.6, delay = 0 }: ScrollMoveProps) {
   // 根据触发点类型设置不同的视口参数
   const viewportOptions = {
-    margin: '-30% 0px -30% 0px', // 上下扩展20%的触发区域
+    margin: '-30% 0px -30% 0px', // 上下扩展30%的触发区域
     amount: 1
   };
 
