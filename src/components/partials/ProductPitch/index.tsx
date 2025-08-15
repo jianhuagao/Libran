@@ -47,7 +47,7 @@ export default function ProductPitch() {
               ))}
             </div>
           </div>
-          <div className="group relative mt-20 ml-auto min-h-[200px] pb-30 sm:pb-80 lg:mt-0 lg:pb-0">
+          <div className="group relative mt-20 ml-auto hidden min-h-[200px] pb-30 sm:block sm:pb-80 lg:mt-0 lg:pb-0">
             <Image
               className="absolute -top-20 left-0 w-full max-w-[200px] -rotate-15 rounded-lg shadow-2xl sm:max-w-sm md:max-w-md"
               src="/img/screenshot/t2.jpg"
@@ -69,10 +69,40 @@ export default function ProductPitch() {
             <AnimatedScrollMove x={60} y={60} delay={0.1}>
               <Image
                 className="absolute top-0 left-40 w-full max-w-[200px] rounded-lg shadow-2xl transition-transform duration-500 ease-in-out group-hover:translate-4 sm:max-w-sm md:max-w-md"
-                src="/img/screenshot/t1.png"
+                src="/img/screenshot/t1.jpg"
                 alt="libran"
                 width={400}
                 height={200}
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 400px"
+              />
+            </AnimatedScrollMove>
+          </div>
+          <div className="group relative block h-[500px] min-h-[200px] sm:hidden">
+            <Image
+              className="absolute -top-20 left-[10%] w-full max-w-[200px] -rotate-15 rounded-lg shadow-2xl sm:max-w-sm md:max-w-md"
+              src="/img/screenshot/t2m.jpg"
+              alt="libran"
+              width={400}
+              height={787}
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 400px"
+            />
+            <AnimatedScrollMove x={40} y={40}>
+              <Image
+                className="absolute -top-10 left-[20%] w-full max-w-[200px] -rotate-5 rounded-lg shadow-2xl transition-transform duration-500 ease-in-out group-hover:translate-2 sm:max-w-sm md:max-w-md"
+                src="/img/screenshot/t3m.jpg"
+                alt="libran"
+                width={400}
+                height={787}
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 400px"
+              />
+            </AnimatedScrollMove>
+            <AnimatedScrollMove x={60} y={60} delay={0.1}>
+              <Image
+                className="absolute top-0 left-[30%] w-full max-w-[200px] rounded-lg shadow-2xl transition-transform duration-500 ease-in-out group-hover:translate-4 sm:max-w-sm md:max-w-md"
+                src="/img/screenshot/t1m.jpg"
+                alt="libran"
+                width={400}
+                height={787}
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 400px"
               />
             </AnimatedScrollMove>
