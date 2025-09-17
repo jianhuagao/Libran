@@ -28,39 +28,44 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
     const con = contentRef.current;
     const wh = window.innerHeight;
 
-    // 初始 & resize 时读取并缓存
+    // 计算布局
     const computeLayout = () => {
+      if (!con || !gal || !cont) return;
+
       const diff = con.scrollWidth - gal.clientWidth;
       if (diff <= 0) {
         maxScrollRef.current = 0;
-        // 居中
-        contentRef.current!.style.justifyContent = 'center';
+        con.style.justifyContent = 'center';
       } else {
         maxScrollRef.current = diff + 32;
-        contentRef.current!.style.justifyContent = 'flex-start';
+        con.style.justifyContent = 'flex-start';
       }
 
-      // 最大水平位移
       maxScrollRef.current = Math.max(0, con.scrollWidth - gal.clientWidth + 32);
-      // 容器在文档中的位置和高度
       containerTopRef.current = cont.offsetTop;
       containerHeightRef.current = cont.offsetHeight;
     };
+
+    // 初始计算
     computeLayout();
 
+    // resize 节流
     let resizeTimer: NodeJS.Timeout;
-    window.addEventListener('resize', () => {
+    const onResize = () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(computeLayout, 150);
-    });
+    };
+    window.addEventListener('resize', onResize);
 
-    // Lenis 滚动监听：计算 rawProgress
+    // 页面加载完成时再计算一次（防止首次进入图片未加载完）
+    window.addEventListener('load', computeLayout);
+
+    // Lenis 滚动监听
     const off = lenis?.on('scroll', () => {
       const scrollY = lenis.scroll;
 
-      // 触发开始：容器顶端到达屏幕中点
+      // 触发开始/结束点
       const start = containerTopRef.current - wh / 2;
-      // 触发结束：容器底部到达屏幕中点
       const end = containerTopRef.current + containerHeightRef.current - wh / 2;
       const range = end - start;
 
@@ -69,7 +74,7 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
       targetProgressRef.current = raw;
     });
 
-    // 动画循环：平滑追踪，并直接写 DOM
+    // 动画循环
     let rafId: number;
     const tick = () => {
       const cur = progressRef.current;
@@ -77,11 +82,9 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
       const alpha = 0.1;
       const next = cur + (tar - cur) * alpha;
 
-      // 差值显著时才更新
       if (Math.abs(next - cur) >= 0.0001) {
         progressRef.current = next;
         const x = easeOutQuad(next) * maxScrollRef.current;
-        // 添加空检查，确保 contentRef.current 不为 null
         if (contentRef.current) {
           contentRef.current.style.transform = `translateX(-${x}px)`;
         }
@@ -89,10 +92,12 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
 
       rafId = requestAnimationFrame(tick);
     };
-    rafId = requestAnimationFrame(tick);
+    // 初始执行一次，避免 Lenis 没触发时 translateX 不更新
+    tick();
 
     return () => {
-      window.removeEventListener('resize', computeLayout);
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('load', computeLayout);
       off?.();
       cancelAnimationFrame(rafId);
       clearTimeout(resizeTimer);
