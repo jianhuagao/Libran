@@ -17,7 +17,7 @@ const images = [
 
 export default function DynamicPictureWall() {
   return (
-    <WallScrollContainer>
+    <WallScrollContainer debug>
       {images.map(image => (
         <div
           key={image.id}

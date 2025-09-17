@@ -1,108 +1,176 @@
 'use client';
+
+import React, { useEffect, useRef, ReactNode } from 'react';
 import { useLenis } from 'lenis/react';
-import { useEffect, useRef, ReactNode } from 'react';
+
+type WallScrollContainerProps = {
+  children: ReactNode;
+  /** 线上排查时可临时打开打印信息，部署后建议关闭 */
+  debug?: boolean;
+};
 
 const easeOutQuad = (t: number) => t * (2 - t);
 
-export default function WallScrollContainer({ children }: { children: ReactNode }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const galleryRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+export default function WallScrollContainer({ children, debug = false }: WallScrollContainerProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const galleryRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
 
-  // 缓存值
-  const maxScrollRef = useRef(0);
-  const containerTopRef = useRef(0);
-  const containerHeightRef = useRef(0);
+  const maxScrollRef = useRef<number>(0);
+  const containerTopRef = useRef<number>(0);
+  const containerHeightRef = useRef<number>(0);
+  const whRef = useRef<number>(typeof window !== 'undefined' ? window.innerHeight : 0);
 
-  // 平滑进度
-  const targetProgressRef = useRef(0);
-  const progressRef = useRef(0);
+  const targetProgressRef = useRef<number>(0);
+  const progressRef = useRef<number>(0);
 
   const lenis = useLenis();
 
   useEffect(() => {
-    if (!containerRef.current || !galleryRef.current || !contentRef.current) return;
-
     const cont = containerRef.current;
     const gal = galleryRef.current;
     const con = contentRef.current;
-    const wh = window.innerHeight;
+    if (!cont || !gal || !con) {
+      if (debug) console.warn('[WallScroll] missing refs', { cont, gal, con });
+      return;
+    }
 
-    // 计算布局
+    // 计算布局（尽量使用 getBoundingClientRect + window.scrollY）
     const computeLayout = () => {
       if (!con || !gal || !cont) return;
-
-      const diff = con.scrollWidth - gal.clientWidth;
+      whRef.current = window.innerHeight;
+      const contentWidth = con.scrollWidth;
+      const galWidth = gal.clientWidth;
+      const diff = contentWidth - galWidth;
       if (diff <= 0) {
         maxScrollRef.current = 0;
         con.style.justifyContent = 'center';
       } else {
-        maxScrollRef.current = diff + 32;
+        maxScrollRef.current = Math.max(0, diff + 32); // 保持你原来的偏移
         con.style.justifyContent = 'flex-start';
       }
 
-      maxScrollRef.current = Math.max(0, con.scrollWidth - gal.clientWidth + 32);
-      containerTopRef.current = cont.offsetTop;
-      containerHeightRef.current = cont.offsetHeight;
+      const rect = cont.getBoundingClientRect();
+      containerTopRef.current = rect.top + window.scrollY;
+      containerHeightRef.current = rect.height;
+
+      // 保证 transform 随 maxScroll 更新（避免旧值超出新 max）
+      const x = easeOutQuad(progressRef.current) * maxScrollRef.current;
+      con.style.transform = `translateX(-${x}px)`;
+
+      if (debug) {
+        console.log('[WallScroll] computeLayout', {
+          contentWidth,
+          galWidth,
+          maxScroll: maxScrollRef.current,
+          containerTop: containerTopRef.current,
+          containerHeight: containerHeightRef.current,
+          wh: whRef.current
+        });
+      }
     };
 
-    // 初始计算
+    // 初始计算 + 在下一帧再计算以防首帧图片尚未布局
     computeLayout();
+    let initRaf = requestAnimationFrame(() => {
+      computeLayout();
+      initRaf = requestAnimationFrame(() => {
+        computeLayout();
+      });
+    });
 
-    // resize 节流
-    let resizeTimer: NodeJS.Timeout;
+    // Resize 节流
+    let resizeTimer: ReturnType<typeof setTimeout> | null = null;
     const onResize = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(computeLayout, 150);
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        computeLayout();
+        resizeTimer = null;
+      }, 120);
     };
     window.addEventListener('resize', onResize);
 
-    // 页面加载完成时再计算一次（防止首次进入图片未加载完）
+    // 页面 load 兜底（资源完全加载后再算一次）
     window.addEventListener('load', computeLayout);
 
-    // Lenis 滚动监听
-    const off = lenis?.on('scroll', () => {
-      const scrollY = lenis.scroll;
+    // ResizeObserver：当内容尺寸（图片）变化时触发
+    let ro: ResizeObserver | null = null;
+    try {
+      ro = new ResizeObserver(() => {
+        computeLayout();
+      });
+      ro.observe(con);
+    } catch (err) {
+      if (debug) console.warn('[WallScroll] ResizeObserver not available', err);
+    }
 
-      // 触发开始/结束点
-      const start = containerTopRef.current - wh / 2;
-      const end = containerTopRef.current + containerHeightRef.current - wh / 2;
+    // scroll 更新：优先使用 lenis，否则回退到 window.scroll
+    type LenisLike = { on: (event: string, fn: () => void) => (() => void) | void; scroll?: number };
+    const l = lenis as LenisLike | undefined;
+
+    const updateProgressFromScroll = (scrollY: number) => {
+      const start = containerTopRef.current - whRef.current / 2;
+      const end = containerTopRef.current + containerHeightRef.current - whRef.current / 2;
       const range = end - start;
-
-      // rawProgress 从 0→1
-      const raw = Math.min(1, Math.max(0, (scrollY - start) / range));
+      const raw = range > 0 ? Math.min(1, Math.max(0, (scrollY - start) / range)) : scrollY >= end ? 1 : 0;
       targetProgressRef.current = raw;
-    });
+      if (debug) {
+        // 打开 debug 时可能会很频繁，线上请谨慎开启
+        console.log('[WallScroll] updateProgress', { scrollY, start, end, range, raw });
+      }
+    };
 
-    // 动画循环
-    let rafId: number;
+    const onWindowScroll = () => {
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      updateProgressFromScroll(scrollY);
+    };
+
+    let offLenis: (() => void) | undefined;
+    if (l && typeof l.on === 'function') {
+      const maybeOff = l.on('scroll', () => {
+        const scrollVal = typeof l.scroll === 'number' ? l.scroll : window.scrollY || 0;
+        updateProgressFromScroll(scrollVal);
+      });
+      if (typeof maybeOff === 'function') offLenis = maybeOff;
+      if (debug) console.log('[WallScroll] using Lenis');
+    } else {
+      window.addEventListener('scroll', onWindowScroll, { passive: true });
+      if (debug) console.log('[WallScroll] using window scroll fallback');
+    }
+
+    // animation loop
+    let rafId = 0;
     const tick = () => {
       const cur = progressRef.current;
       const tar = targetProgressRef.current;
-      const alpha = 0.1;
+      const alpha = 0.12;
       const next = cur + (tar - cur) * alpha;
-
-      if (Math.abs(next - cur) >= 0.0001) {
+      if (Math.abs(next - cur) > 0.0001) {
         progressRef.current = next;
         const x = easeOutQuad(next) * maxScrollRef.current;
-        if (contentRef.current) {
-          contentRef.current.style.transform = `translateX(-${x}px)`;
-        }
+        con.style.transform = `translateX(-${x}px)`;
       }
-
       rafId = requestAnimationFrame(tick);
     };
-    // 初始执行一次，避免 Lenis 没触发时 translateX 不更新
-    tick();
+    rafId = requestAnimationFrame(tick);
 
+    // cleanup
     return () => {
       window.removeEventListener('resize', onResize);
       window.removeEventListener('load', computeLayout);
-      off?.();
-      cancelAnimationFrame(rafId);
-      clearTimeout(resizeTimer);
+      window.removeEventListener('scroll', onWindowScroll);
+      if (offLenis) offLenis();
+      if (ro) {
+        try {
+          ro.disconnect();
+        } catch {}
+        ro = null;
+      }
+      if (rafId) cancelAnimationFrame(rafId);
+      if (initRaf) cancelAnimationFrame(initRaf);
+      if (resizeTimer) clearTimeout(resizeTimer);
     };
-  }, [lenis]);
+  }, [lenis, debug]);
 
   return (
     <div ref={containerRef} className="relative" style={{ height: '100vh' }}>
@@ -111,7 +179,7 @@ export default function WallScrollContainer({ children }: { children: ReactNode 
         className="sticky top-0 w-full overflow-x-hidden px-4 py-20 md:top-[20%]"
         style={{ willChange: 'transform' }}
       >
-        <div ref={contentRef} className="flex gap-8 will-change-transform">
+        <div ref={contentRef} className="flex gap-8" style={{ willChange: 'transform' }}>
           {children}
         </div>
       </div>
