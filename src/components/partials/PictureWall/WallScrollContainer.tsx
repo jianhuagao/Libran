@@ -152,7 +152,8 @@ export default function WallScrollContainer({ children, debug = false }: WallScr
       }
       rafId = requestAnimationFrame(tick);
     };
-    rafId = requestAnimationFrame(tick);
+    // 初始执行一次，避免 Lenis 没触发时 translateX 不更新
+    tick();
 
     // cleanup
     return () => {
