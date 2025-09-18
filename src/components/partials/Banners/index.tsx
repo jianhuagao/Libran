@@ -23,8 +23,14 @@ export default function BannerBetween() {
         <div className="relative size-full rounded-full border border-white/10 bg-white/20 shadow-2xl transition-all duration-700 group-hover:saturate-200 dark:bg-black/80">
           <Image
             fill
+            src="/img/wallpaper/c5.jpg"
+            className="rounded-full object-cover shadow-2xl dark:hidden"
+            alt="Abstract technology visualization"
+          />
+          <Image
+            fill
             src="/img/wallpaper/c4.jpg"
-            className="rounded-full object-cover shadow-2xl"
+            className="hidden rounded-full object-cover shadow-2xl dark:block"
             alt="Abstract technology visualization"
           />
         </div>
