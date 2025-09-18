@@ -15,7 +15,10 @@ const eslintConfig = [
   {
     // 可作用于所有文件，也可以指定特定的 files
     rules: {
-      "no-console": 1, // console
+      "no-console": ["error", {
+        // 允许 console.error 和 console.warn info，其他 console 调用报错
+        "allow": ["error", "warn", "info"]
+      }]
     },
   }
 ];

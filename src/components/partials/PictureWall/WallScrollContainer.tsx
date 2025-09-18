@@ -59,7 +59,7 @@ export default function WallScrollContainer({ children, debug = false }: WallScr
       con.style.transform = `translateX(-${x}px)`;
 
       if (debug) {
-        console.log('[WallScroll] computeLayout', {
+        console.info('[WallScroll] computeLayout', {
           contentWidth,
           galWidth,
           maxScroll: maxScrollRef.current,
@@ -116,7 +116,7 @@ export default function WallScrollContainer({ children, debug = false }: WallScr
       targetProgressRef.current = raw;
       if (debug) {
         // 打开 debug 时可能会很频繁，线上请谨慎开启
-        console.log('[WallScroll] updateProgress', { scrollY, start, end, range, raw });
+        console.info('[WallScroll] updateProgress', { scrollY, start, end, range, raw });
       }
     };
 
@@ -132,10 +132,10 @@ export default function WallScrollContainer({ children, debug = false }: WallScr
         updateProgressFromScroll(scrollVal);
       });
       if (typeof maybeOff === 'function') offLenis = maybeOff;
-      if (debug) console.log('[WallScroll] using Lenis');
+      if (debug) console.info('[WallScroll] using Lenis');
     } else {
       window.addEventListener('scroll', onWindowScroll, { passive: true });
-      if (debug) console.log('[WallScroll] using window scroll fallback');
+      if (debug) console.info('[WallScroll] using window scroll fallback');
     }
 
     // animation loop
