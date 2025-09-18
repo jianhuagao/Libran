@@ -12,6 +12,8 @@ interface AnimatedShowProps {
   childDuration?: number;
   staggerChildren?: number;
   itemClassNames?: string[];
+  visibleDelay?: number;
+  hiddenDelay?: number;
 }
 
 const AnimatedShow = ({
@@ -22,7 +24,9 @@ const AnimatedShow = ({
   childDuration = 0.4,
   staggerChildren = 0.2,
   itemClassNames = [],
-  inViewShow = false
+  inViewShow = false,
+  visibleDelay = 0,
+  hiddenDelay = 0
 }: AnimatedShowProps) => {
   const animationVariants = useMemo(
     () => ({
@@ -33,7 +37,8 @@ const AnimatedShow = ({
           duration,
           staggerChildren,
           type: 'spring' as const,
-          bounce: 0.4
+          bounce: 0.4,
+          delay: hiddenDelay
         }
       },
       visible: {
@@ -43,11 +48,12 @@ const AnimatedShow = ({
           duration,
           staggerChildren,
           type: 'spring' as const,
-          bounce: 0.4
+          bounce: 0.4,
+          delay: visibleDelay
         }
       }
     }),
-    [scale, duration, staggerChildren]
+    [scale, duration, staggerChildren, visibleDelay, hiddenDelay]
   );
 
   const childVariants = useMemo(
