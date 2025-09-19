@@ -14,7 +14,7 @@ export default function Cover() {
             <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-tr from-white to-transparent to-40% dark:from-black" />
 
             {/* 底部：模糊渐变层 */}
-            <div className="pointer-events-none absolute bottom-0 left-0 h-full w-full mask-[linear-gradient(to_top_right,_rgba(0,0,0,1)_10%,_rgba(0,0,0,0)_70%)] backdrop-blur-2xl" />
+            <div className="pointer-events-none absolute bottom-0 left-0 h-full w-full mask-[linear-gradient(to_top_right,_rgba(0,0,0,1)_25%,_rgba(0,0,0,0)_50%)] backdrop-blur-2xl" />
             <div></div>
 
             <AnimatedShow visibleDelay={0.4} inViewShow className="flex flex-col items-start gap-2 p-4 md:gap-4 md:p-20">
