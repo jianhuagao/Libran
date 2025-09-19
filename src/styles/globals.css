@@ -21,3 +21,6 @@
     text-wrap: balance;
   }
 }
+
+/* 定义自定义 variant */
+@custom-variant hoverOrTap (&:hover, &:focus, &:active);
