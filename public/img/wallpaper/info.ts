@@ -83,7 +83,7 @@ export const upPhotoList1 = [
 
 export const upPhotoList2 = [
   {
-    id: 1,
+    id: 11,
     src: '/img/wallpaper/w1.jpg',
     alt: 'Sunrise',
     author: 'JOHN TOWNER',
@@ -91,7 +91,7 @@ export const upPhotoList2 = [
     href: 'https://unsplash.com/photos/aerial-photo-of-brown-moutains-JgOeRuGD_Y4'
   },
   {
-    id: 2,
+    id: 22,
     src: '/img/wallpaper/w2.jpg',
     alt: 'Mountains',
     author: 'Jerry Kavan',
@@ -102,7 +102,7 @@ export const upPhotoList2 = [
 
 export const upPhotoList3 = [
   {
-    id: 1,
+    id: 13,
     src: '/img/wallpaper/co1.jpg',
     alt: 'Old-growth forest',
     author: 'Kristaps Ungurs',
@@ -110,7 +110,7 @@ export const upPhotoList3 = [
     href: 'https://unsplash.com/photos/aerial-view-of-a-dense-green-forest-canopy-rmJAXI1OQAY'
   },
   {
-    id: 2,
+    id: 14,
     src: '/img/wallpaper/co2.jpg',
     alt: 'Italy',
     author: 'Marek Piwnicki',
@@ -118,7 +118,7 @@ export const upPhotoList3 = [
     href: 'https://unsplash.com/photos/sunlit-mountain-peak-under-dramatic-clouds-at-dawn-1kuBWsFnETU'
   },
   {
-    id: 3,
+    id: 15,
     src: '/img/wallpaper/co3.jpg',
     alt: 'City',
     author: 'Vincent Chan',
