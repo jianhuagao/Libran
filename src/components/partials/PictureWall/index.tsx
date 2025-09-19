@@ -1,24 +1,11 @@
 import Image from 'next/image';
 import WallScrollContainer from './WallScrollContainer';
-
-// 图片数据
-const images = [
-  { id: 1, src: '/img/wallpaper/c1.jpg', alt: 'Mountain Landscape' },
-  { id: 2, src: '/img/wallpaper/c2.jpg', alt: 'Ocean Sunset' },
-  { id: 3, src: '/img/wallpaper/c3.jpg', alt: 'Forest Pathway' },
-  { id: 4, src: '/img/wallpaper/c4.jpg', alt: 'Desert Dunes' },
-  { id: 5, src: '/img/wallpaper/c5.jpg', alt: 'City Skyline' },
-  { id: 6, src: '/img/wallpaper/c6.jpg', alt: 'Northern Lights' },
-  { id: 7, src: '/img/wallpaper/c7.jpg', alt: 'Tropical Beach' },
-  { id: 8, src: '/img/wallpaper/c8.jpg', alt: 'Snowy Mountains' },
-  { id: 9, src: '/img/wallpaper/w1.jpg', alt: 'Snowy Mountains' },
-  { id: 10, src: '/img/wallpaper/w2.jpg', alt: 'Snowy Mountains' }
-];
+import { upPhotoList1 } from '@p/img/wallpaper/info';
 
 export default function DynamicPictureWall() {
   return (
     <WallScrollContainer>
-      {images.map(image => (
+      {upPhotoList1.map(image => (
         <div
           key={image.id}
           className="group relative flex-shrink-0 transform transition-all duration-500 ease-in-out hover:scale-105"
@@ -35,7 +22,7 @@ export default function DynamicPictureWall() {
               />
               <div className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                 <h3 className="text-lg font-bold text-white">{image.alt}</h3>
-                <p className="text-sm text-gray-300">Image #{image.id}</p>
+                <p className="text-sm text-gray-300">author: @{image.author}</p>
               </div>
             </div>
           </div>
