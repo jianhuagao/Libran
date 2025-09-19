@@ -8,7 +8,7 @@ import BackgroundBlock from '@/components/ui/BackgroundBlock';
 import CenterContent from '@/components/ui/CenterContent';
 import PitchCard from '@/components/partials/PitchCard';
 import Cover from '@/components/partials/Cover';
-// import ShowArea from '@/components/partials/ShowArea';
+import ShowArea from '@/components/partials/ShowArea';
 
 export default function Home() {
   return (
@@ -25,7 +25,7 @@ export default function Home() {
         <Cover />
         <PictureWall />
         <CustomerReviews />
-        {/* <ShowArea /> */}
+        <ShowArea />
         <CenterContent>
           <PitchCard />
         </CenterContent>
