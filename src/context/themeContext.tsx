@@ -16,17 +16,18 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme) {
-      setTheme(storedTheme as 'light' | 'dark');
-    } else {
+  // 直接在 useState 初始化函数中获取主题，避免在 useEffect 中设置状态
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window !== 'undefined') {
+      const storedTheme = localStorage.getItem('theme');
+      if (storedTheme) {
+        return storedTheme as 'light' | 'dark';
+      }
       const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(prefersDarkScheme ? 'dark' : 'light');
+      return prefersDarkScheme ? 'dark' : 'light';
     }
-  }, []);
+    return 'light'; // 默认值，服务端渲染时使用
+  });
 
   useEffect(() => {
     if (theme === 'dark') {

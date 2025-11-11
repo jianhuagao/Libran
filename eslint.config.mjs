@@ -11,7 +11,7 @@ const eslintConfig = [...nextCoreWebVitals, // ✅ 添加自定义规则
     }]
   },
 }, {
-  ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"]
+  ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts", "scripts/**"]
 }];
 
 export default eslintConfig;

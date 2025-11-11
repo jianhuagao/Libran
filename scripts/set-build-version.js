@@ -6,7 +6,7 @@ const path = require('path');
 let gitHash = '';
 try {
   gitHash = execSync('git rev-parse --short HEAD').toString().trim();
-} catch (error) {
+} catch {
   // console.error('❌ 获取 Git 哈希失败，请确认当前目录是一个 Git 仓库。');
   process.exit(1);
 }

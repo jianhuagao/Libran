@@ -22,11 +22,11 @@ const ChildVariants = {
 };
 
 const AnimatedSection = ({ children, className }: { children: React.ReactNode[]; className?: string }) => {
-  const [isClient, setIsClient] = useState(false);
+  // 直接在 useState 初始化函数中检查是否为客户端
+  const [isClient] = useState(() => typeof window !== 'undefined');
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
     const timer = setTimeout(() => setIsVisible(true), 100); // 延迟以避免初次显示
     return () => clearTimeout(timer); // 清理定时器
   }, []);
