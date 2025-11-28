@@ -15,7 +15,7 @@ const urls: UrlItem[] = [
   { href: '/', label: 'Home' },
   { href: '/pricing', label: 'Pricing' },
   { href: '/signin', label: 'Signin' },
-  { href: 'https://twinkle.jhub.space', label: 'TwinkleUI', target: '_blank' }
+  { href: 'https://taurus.jhub.space', label: 'TaurusUI', target: '_blank' }
 ];
 
 export default function Header() {

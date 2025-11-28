@@ -1,10 +1,10 @@
 # Libran
 
-A website example developed with [TwinkleUI](https://twinkleui.vercel.app), built on Next.js, offering an elegant user interface and smooth interactive experience.
+A website example developed with [TaurusUI](https://taurusui.vercel.app), built on Next.js, offering an elegant user interface and smooth interactive experience.
 
-![cloveui](./public/img/project/x1.png)
-![cloveui](./public/img/project/x2.png)
-![cloveui](./public/img/project/x3.png)
+![libran](./public/img/project/x1.png)
+![libran](./public/img/project/x2.png)
+![libran](./public/img/project/x3.png)
 
 ## ✨ Features
 
