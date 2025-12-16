@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
+import React from 'react';
 import { memo, useMemo } from 'react';
 
 interface AnimatedShowProps {
@@ -64,7 +65,7 @@ const AnimatedShow = ({
     [scale, childDuration]
   );
 
-  const arrChildren = Array.isArray(children) ? children : [children];
+  const arrChildren = React.Children.toArray(children);
 
   return (
     <motion.div

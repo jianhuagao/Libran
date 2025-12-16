@@ -1,4 +1,4 @@
-import BannerBetween from '@/components/partials/Banners';
+import Banners from '@/components/partials/Banners';
 import Features from '@/components/partials/Features';
 import LogoCloud from '@/components/partials/LogoCloud';
 import PictureWall from '@/components/partials/PictureWall';
@@ -16,7 +16,7 @@ export default function Home() {
       <BackgroundBlock />
       <div className="min-h-[1200px]">
         <CenterContent>
-          <BannerBetween />
+          <Banners />
         </CenterContent>
         <CenterContent>
           <Features />
