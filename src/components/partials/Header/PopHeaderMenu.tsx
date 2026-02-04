@@ -7,10 +7,15 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { UrlItem } from './page';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import clsx from 'clsx';
 
 export default function PopHeaderMenu({ optionsBlock, urls }: { optionsBlock: React.ReactNode; urls: UrlItem[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const lenis = useLenis();
+  const pathname = usePathname();
+  // 取当前路径的第一级
+  const currentRoot = pathname.split('/')[1] ?? '';
 
   useEffect(() => {
     if (isOpen) {
@@ -37,7 +42,7 @@ export default function PopHeaderMenu({ optionsBlock, urls }: { optionsBlock: Re
                   duration: 0.6,
                   bounce: 0.5
                 }}
-                className="fixed inset-[12px] z-[9999] m-auto max-h-[calc(100vh-24px)] max-w-[calc(100vw-24px)] rounded-2xl bg-white/60 p-3 text-sm text-gray-700 shadow-2xl ring-1 ring-gray-400/10 backdrop-blur-2xl dark:bg-black/20 dark:text-white dark:ring-white/10"
+                className="fixed inset-[12px] z-9999 m-auto max-h-[calc(100vh-24px)] max-w-[calc(100vw-24px)] rounded-2xl bg-white/60 p-3 text-sm text-gray-700 shadow-2xl ring-1 ring-gray-400/10 backdrop-blur-2xl dark:bg-black/20 dark:text-white dark:ring-white/10"
               >
                 <AnimatedShow className="" staggerChildren={0.1}>
                   <div className="flex items-center">
@@ -59,18 +64,31 @@ export default function PopHeaderMenu({ optionsBlock, urls }: { optionsBlock: Re
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 py-3">
-                    {urls.map(item => (
-                      <Link
-                        key={item.label}
-                        href={item.href}
-                        target={item.target}
-                        rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
-                        onClick={() => setIsOpen(false)}
-                        className="rounded-primary cursor-pointer p-3 text-sm transition-all hover:bg-gray-500/15 dark:hover:bg-white/20"
-                      >
-                        {item.label.charAt(0).toUpperCase() + item.label.slice(1)}
-                      </Link>
-                    ))}
+                    {urls.map(item => {
+                      let isActive = false;
+                      //如果url是http或https开头，不处理
+                      if (item.href.startsWith('http')) {
+                        isActive = false;
+                      } else {
+                        const itemRoot = item.href.split('/')[1] ?? '';
+                        isActive = currentRoot === itemRoot;
+                      }
+                      return (
+                        <Link
+                          key={item.label}
+                          href={item.href}
+                          target={item.target}
+                          rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
+                          onClick={() => setIsOpen(false)}
+                          className={clsx(
+                            'rounded-primary cursor-pointer p-3 text-sm transition-all hover:bg-gray-500/15 dark:hover:bg-white/20',
+                            isActive && 'bg-gray-500/15 dark:bg-white/20'
+                          )}
+                        >
+                          {item.label.charAt(0).toUpperCase() + item.label.slice(1)}
+                        </Link>
+                      );
+                    })}
                   </div>
                   <div className="flex items-center justify-between gap-3 p-3">{optionsBlock}</div>
                 </AnimatedShow>
