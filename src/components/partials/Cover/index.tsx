@@ -11,10 +11,10 @@ export default function Cover() {
             <Image src={s.src} alt={s.alt} fill className="rounded-4xl object-cover" />
 
             {/* 底部：颜色渐变 */}
-            <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-tr from-white/60 to-transparent to-40% dark:from-black/60" />
+            <div className="absolute bottom-0 left-0 h-full w-full bg-linear-to-tr from-white/60 to-transparent to-40% dark:from-black/60" />
 
             {/* 底部：模糊渐变层 */}
-            <div className="pointer-events-none absolute bottom-0 left-0 h-full w-full mask-[linear-gradient(to_top_right,_rgba(0,0,0,1)_30%,_rgba(0,0,0,0)_55%)] backdrop-blur-2xl" />
+            <div className="pointer-events-none absolute bottom-0 left-0 h-full w-full mask-[linear-gradient(to_top_right,rgba(0,0,0,1)_30%,rgba(0,0,0,0)_55%)] backdrop-blur-2xl" />
             <div></div>
 
             <AnimatedShow visibleDelay={0.4} inViewShow className="flex flex-col items-start gap-2 p-4 md:gap-4 md:p-20">

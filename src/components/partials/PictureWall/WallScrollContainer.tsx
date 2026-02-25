@@ -2,6 +2,8 @@
 
 import { ReactNode, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { useLenis } from 'lenis/react';
+import type Lenis from 'lenis';
+import type { ScrollCallback } from 'lenis';
 
 type WallScrollContainerProps = {
   children: ReactNode;
@@ -23,18 +25,6 @@ type WallScrollContainerProps = {
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 const easeOutQuad = (t: number) => t * (2 - t);
 
-/** Lenis scroll 事件常见形态：不同版本可能字段有增减，这里只取我们需要的最小集合 */
-type LenisScrollEvent = {
-  scroll: number;
-  // 其它字段不关心就不声明，避免 any
-};
-
-/** 我们在组件中真正用到的 Lenis 实例能力（最小接口，不用 any） */
-type LenisLike = {
-  scroll: number;
-  on: (event: 'scroll', handler: (e: LenisScrollEvent) => void) => void | (() => void);
-};
-
 export default function WallScrollContainer({
   children,
   debug = false,
@@ -47,25 +37,22 @@ export default function WallScrollContainer({
   const galleryRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
 
-  const maxScrollXRef = useRef(0);
-  const containerTopRef = useRef(0);
-  const whRef = useRef(0);
+  const maxScrollXRef = useRef<number>(0);
+  const containerTopRef = useRef<number>(0);
+  const whRef = useRef<number>(0);
 
-  const targetRef = useRef(0);
-  const currentRef = useRef(0);
+  const targetRef = useRef<number>(0);
+  const currentRef = useRef<number>(0);
 
   const rafRef = useRef<number | null>(null);
-  const inViewRef = useRef(false);
+  const inViewRef = useRef<boolean>(false);
 
-  // 给 window 上挂一个私有字段时也别用 any：用接口扩展
   const windowScrollHandlerRef = useRef<(() => void) | null>(null);
 
-  // 动态容器高度：让纵向滚动足够长，驱动完整横向位移
   const [containerHeight, setContainerHeight] = useState<string>('100vh');
 
-  // lenis/react 的返回类型在不同版本可能为 Lenis | null | undefined
-  // 这里用 unknown 接住，再做类型守卫，不用 any
-  const lenis = useLenis() as unknown;
+  // lenis/react: useLenis() -> Lenis | undefined
+  const lenis = useLenis() as Lenis | undefined;
 
   const log = useCallback(
     (msg: string, data?: Record<string, unknown>) => {
@@ -106,7 +93,7 @@ export default function WallScrollContainer({
     const rect = cont.getBoundingClientRect();
     containerTopRef.current = rect.top + window.scrollY;
 
-    // 关键：根据 maxScrollX 设置“需要的纵向滚动距离”
+    // 根据横向需要滚动的距离，给足纵向滚动空间
     const extraY = maxScrollXRef.current / Math.max(0.0001, scrollFactor);
     const heightPx = Math.ceil(whRef.current + stickyTopPx + extraY);
     setContainerHeight(`${heightPx}px`);
@@ -125,7 +112,10 @@ export default function WallScrollContainer({
 
   const updateTargetByScrollY = useCallback(
     (scrollY: number) => {
-      const heightNum = Number.parseFloat(containerHeight) || whRef.current;
+      const heightNum = Number.isFinite(Number.parseFloat(containerHeight))
+        ? Number.parseFloat(containerHeight)
+        : whRef.current;
+
       const start = containerTopRef.current - whRef.current / 2;
       const end = containerTopRef.current + heightNum - whRef.current / 2;
       const range = end - start;
@@ -133,9 +123,7 @@ export default function WallScrollContainer({
       const raw = range > 0 ? clamp01((scrollY - start) / range) : scrollY >= end ? 1 : 0;
       targetRef.current = raw;
 
-      if (debug) {
-        log('updateTarget', { scrollY, start, end, range, raw });
-      }
+      if (debug) log('updateTarget', { scrollY, start, end, range, raw });
     },
     [containerHeight, debug, log]
   );
@@ -145,7 +133,6 @@ export default function WallScrollContainer({
 
     const tick = () => {
       rafRef.current = requestAnimationFrame(tick);
-
       if (!inViewRef.current) return;
 
       const cur = currentRef.current;
@@ -168,29 +155,19 @@ export default function WallScrollContainer({
     }
   }, []);
 
-  // Lenis 类型守卫：不用 any，安全收窄到 LenisLike
-  const isLenisLike = (v: unknown): v is LenisLike => {
-    if (typeof v !== 'object' || v === null) return false;
-    const obj = v as Record<string, unknown>;
-    return typeof obj.on === 'function' && typeof obj.scroll === 'number';
-  };
-
   useLayoutEffect(() => {
     const cont = containerRef.current;
     const con = contentRef.current;
     if (!cont || !con) return;
 
-    // 首次测量合帧
     const r1 = requestAnimationFrame(() => computeLayout());
     const r2 = requestAnimationFrame(() => computeLayout());
 
-    // ResizeObserver：内容尺寸变化（图片、字体、响应式）触发
     const ro = new ResizeObserver(() => {
       requestAnimationFrame(() => computeLayout());
     });
     ro.observe(con);
 
-    // IntersectionObserver：只在可见时跑 rAF
     const io = new IntersectionObserver(
       entries => {
         const entry = entries[0];
@@ -201,32 +178,25 @@ export default function WallScrollContainer({
     );
     io.observe(cont);
 
-    // scroll 更新（Lenis 优先，否则 window scroll）
     let offLenis: (() => void) | undefined;
 
-    if (isLenisLike(lenis)) {
-      const maybeOff = lenis.on('scroll', (e: LenisScrollEvent) => {
-        const scrollY =
-          typeof e.scroll === 'number' ? e.scroll : typeof lenis.scroll === 'number' ? lenis.scroll : window.scrollY || 0;
-
-        updateTargetByScrollY(scrollY);
-      });
-
-      if (typeof maybeOff === 'function') offLenis = maybeOff;
-
+    if (lenis) {
+      // Lenis.on('scroll', cb) => () => void
+      const onLenisScroll: ScrollCallback = (l: Lenis) => {
+        updateTargetByScrollY(l.scroll);
+      };
+      offLenis = lenis.on('scroll', onLenisScroll);
       log('using Lenis');
     } else {
       const handler = () => updateTargetByScrollY(window.scrollY || 0);
       windowScrollHandlerRef.current = handler;
       window.addEventListener('scroll', handler, { passive: true });
-
       log('using window scroll');
     }
 
     const onResize = () => requestAnimationFrame(() => computeLayout());
     window.addEventListener('resize', onResize);
 
-    // 初始化
     updateTargetByScrollY(window.scrollY || 0);
     startRafIfNeeded();
 
