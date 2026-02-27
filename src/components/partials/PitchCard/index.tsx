@@ -38,7 +38,7 @@ export default function PitchCard() {
           <span className="bg-primary/50 dark:bg-primary/40 pointer-events-none absolute right-2 bottom-2 z-0 size-5 rounded-full blur-[14px] transition-transform duration-300 ease-in-out group-hover:translate-1/2"></span>
         </button>
       </div>
-      <span className="bg-primary/25 dark:bg-primary/40 pointer-events-none absolute bottom-0 left-1/2 z-0 size-[80%] -translate-x-1/2 translate-y-2/3 rounded-full blur-[200px] transition-transform duration-300 ease-in-out group-hover:translate-1/2"></span>
+      <span className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-80 translate-y-1/2 opacity-70 [background:radial-gradient(closest-side,oklch(from_var(--color-primary)_l_c_h/0.25),transparent_95%)]" />
     </AnimatedShow>
   );
 }
