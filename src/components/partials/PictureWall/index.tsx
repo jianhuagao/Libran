@@ -4,7 +4,7 @@ import { upPhotoList1 } from '@p/img/wallpaper/info';
 
 export default function DynamicPictureWall() {
   return (
-    <WallScrollContainer scrollFactor={1} lerp={0.14} endOffset={32}>
+    <WallScrollContainer scrollFactor={2} lerp={0.14} endOffset={32}>
       {upPhotoList1.map(image => (
         <article
           key={image.id}

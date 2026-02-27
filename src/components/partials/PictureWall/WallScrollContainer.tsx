@@ -224,7 +224,7 @@ export default function WallScrollContainer({
     <div ref={containerRef} className="relative" style={{ height: containerHeight }}>
       <div
         ref={galleryRef}
-        className="sticky top-0 w-full overflow-x-hidden px-4 py-20 md:top-[20%]"
+        className="sticky top-[15%] w-full overflow-x-hidden px-4 py-20 md:top-[20%]"
         style={{ willChange: 'transform' }}
       >
         <div ref={contentRef} className="flex gap-8" style={{ willChange: 'transform' }}>
